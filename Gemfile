@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.3.1'
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -30,6 +30,7 @@ gem 'pg', '~> 0.15'
 
 gem 'traceroute'
 
+gem 'pry-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -40,7 +41,6 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'simplecov', '~> 0.11.2'
-  gem 'pry-rails'
   gem 'minitest-vcr'
   gem 'minitest-reporters'
   gem 'webmock'
@@ -50,7 +50,6 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-  gem "pry-rails"
   gem "better_errors"
   gem "binding_of_caller"
   gem 'rails-erd'
@@ -61,5 +60,4 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg', '~> 0.15'
 end
