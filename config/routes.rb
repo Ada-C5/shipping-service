@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get '/v1/carriers/:zip&:items' => 'carriers#calculate'
+  post '/v1/carriers/:name/:zip&:items&:type' => 'carriers#selected'
+  get '/v1/tracking' => 'carriers#tracking'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
