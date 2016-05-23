@@ -38,6 +38,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'better_errors'
   gem 'pry-rails'
+  gem 'minitest-reporters'
 end
 
 group :development do
