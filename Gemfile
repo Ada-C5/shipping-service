@@ -5,6 +5,7 @@ gem 'httparty'
 gem 'rest-client'
 gem 'omniauth'
 gem 'graphviz'
+gem 'active_shipping'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
