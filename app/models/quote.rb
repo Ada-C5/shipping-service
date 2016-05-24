@@ -4,15 +4,8 @@ class Quote < ActiveRecord::Base
     parsed_request = JSON.parse(request)
     origin = Quote.origin
 
-    address1 = { #for testing
-      country: "US",
-      state: "WA",
-      city: "Seattle",
-      zip: "98122"
-    }
-
     address = parsed_request["address"]
-    destination = Quote.destination(address1) #change to address when not testing
+    destination = Quote.destination(address) #change to address when not testing
     packages = Quote.packages
 
     carrier = parsed_request["carrier"] #set from request
@@ -20,7 +13,7 @@ class Quote < ActiveRecord::Base
     usps_quote = usps.find_rates(origin, destination, packages)
     quote = self.new
     quote.request = request
-    quote.response = usps_quote.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]} #this returns JSON - w
+    quote.response = carrier_quote.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]} #this returns JSON - w
     quote.save
 
   end
@@ -30,7 +23,7 @@ class Quote < ActiveRecord::Base
   end
 
   def self.destination(address)
-    ActiveShipping::Location.new(country: address[:country], state: address[:state], city: address[:city], zip: address[:zip])
+    ActiveShipping::Location.new(country: address["country"], state: address["state"], city: address["city"], zip: address["zip"])
   end
 
   def self.packages

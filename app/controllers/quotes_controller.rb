@@ -14,12 +14,9 @@ class QuotesController < ApplicationController
       # "address": { country: "US", state: "WA", city: "Seattle", zip: "98122" }
       # }
     #
-    quote = Quote.get_rate(request)#(carrier, address)
+    quote = Quote.get_rate(request)
 
     render json: quote.as_json(only: response)
-
-    # quote.save
-    # quote.request = { "carrier" => "test_carrier", "address" => "test_address" }.to_json
   end
 
   def selection
