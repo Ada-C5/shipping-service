@@ -1,8 +1,5 @@
 class Quote < ActiveRecord::Base
 
-
-
-
   def self.get_rate(carrier, address)
     origin = Quote.origin
     address1 = {
@@ -17,7 +14,7 @@ class Quote < ActiveRecord::Base
     usps = ActiveShipping::USPS.new(login: ENV["USPS_USERNAME"], password: ENV["USPS_PASSWORD"])
     usps_quote = usps.find_rates(origin, destination, packages)
     quote = self.new
-    quote.response = usps_quote
+    quote.response = usps_quote.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]} #this returns JSON - w
     quote.save
     quote.response
   end
