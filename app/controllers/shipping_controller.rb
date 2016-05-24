@@ -11,16 +11,17 @@ class ShippingController < ApplicationController
     destination = ActiveShipping::Location.new(country: 'CA',province: 'ON', city: 'Ottawa', postal_code: 'K1P 1J1')
     packages = [ActiveShipping::Package.new(100, [93,10], cylinder: true), ActiveShipping::Package.new(7.5 * 16, [15, 10, 4.5], units: :imperial)]
 
+    fedex_hash = {}
+
     response = fedex.find_rates(origin, destination, packages)
+    raise
+    puts "this is the response length #{response.rates.length}"
+
+    fedex_hash[:fedex_service_name] = response.rates[0].service_name
+    fedex_hash[:fedex_rate_price] = response.rates[0].price
 
     fedex_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-    render json: fedex_rates.as_json(except: [:created_at, :updated_at])
-
-    # tracking_info = fedex.find_tracking_info('tracking-number', carrier_code: 'fedex_ground') # Ground package
-    #
-    # tracking_info.shipment_events.each do |event|
-    #   puts "#{event.name} at #{event.location.city}, #{event.location.state} on #{event.time}. #{event.message}"
-    # end
+    render json: fedex_hash
   end
 
   def usps
