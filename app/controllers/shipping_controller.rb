@@ -35,11 +35,14 @@ class ShippingController < ApplicationController
       packages << pack
     end
     ups = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_KEY'])
-    response = ups.find_rates(origin, destination, packages)
+    ups_response = ups.find_rates(origin, destination, packages)
+    ups_rates = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    ups_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    usps = ActiveShipping::USPS.new(login: '316ADADE2674')
+    usps_response = usps.find_rates(origin, destination, packages)
+    usps_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    render json: ups_rates
+    render json: [ups_rates, usps_rates]
 
   end
 
