@@ -12,5 +12,9 @@ class ShippingTest < ActiveSupport::TestCase
       assert usps.is_a? ActiveShipping::USPS
     end
 
+    it "shuld return an instance of Fedex", :vcr do
+      fedex = ActiveShipping::FedEx.new(login: '999999999', password: '7777777', key: '1BXXXXXXXXXxrcB', account: '51XXXXX20')
+    end
+
   end
 end
