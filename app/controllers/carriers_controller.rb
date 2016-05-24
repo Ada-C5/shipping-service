@@ -1,10 +1,12 @@
 class CarriersController < ApplicationController
   def calculate
     zip = params[:zip]
+    city = params[:city]
+    state = params[:state]
     items = params[:items]
     estimate = {
-      "usps" => Carrier.estimate_usps_shipping(5, 98104),
-      "ups" => Carrier.estimate_ups_shipping(5, 98104)}
+      "usps" => Carrier.estimate_usps_shipping(items, state, city, zip),
+      "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)}
     render json: estimate.as_json, :status => :ok
   end
 

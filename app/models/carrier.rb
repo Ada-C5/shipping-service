@@ -8,11 +8,11 @@ class Carrier
 
   ORIGIN = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
 
-  def self.estimate_usps_shipping(items, zip)
+  def self.estimate_usps_shipping(items, state, city, zip)
 
     packages = ActiveShipping::Package.new(items * 14, [93, 10], cylinder: false)
     ORIGIN
-    destination = ActiveShipping::Location.new(country: 'US', state: '', city: '', zip: zip)
+    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
 
     usps = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
     response = usps.find_rates(ORIGIN, destination, packages)
@@ -21,10 +21,10 @@ class Carrier
     # self.new
   end
 
-  def self.estimate_ups_shipping(items, zip)
+  def self.estimate_ups_shipping(items, state, city, zip)
     packages = ActiveShipping::Package.new(items * 14, [93, 10], cylinder: false)
     ORIGIN
-    destination = ActiveShipping::Location.new(country: 'US', state: '', city: '', zip: zip)
+    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
 
     ups = ActiveShipping::UPS.new(login: ENV['UPS_LOGIN'], password: ENV['UPS_PASSWORD'], key: ENV['UPS_KEY'])
 
