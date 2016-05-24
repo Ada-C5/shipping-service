@@ -10,7 +10,7 @@ class ShippingController < ApplicationController
   end
 
   def fedex
-    fedex = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_KEY"], account: ENV["FEDEX_ACCOUNT"])
+    fedex = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_KEY"], account: ENV["FEDEX_ACCOUNT"], test: true)
 
     tracking_info = fedex.find_tracking_info('tracking-number', carrier_code: 'fedex_ground') # Ground package
 
