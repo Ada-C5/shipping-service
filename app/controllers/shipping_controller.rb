@@ -25,11 +25,11 @@ class ShippingController < ApplicationController
     orderitems = params[:order][:orderitems]
 
     orderitems.each do |item|
-      weight = item[:weight]
-      height = item[:height]
-      length = item[:length]
-      width = item[:width]
-      pack = ActiveShipping::Package.new( weight* 16,          # 7.5 lbs, times 16 oz/lb.
+      weight = item[:weight].to_i
+      height = item[:height].to_i
+      length = item[:length].to_i
+      width = item[:width].to_i
+      pack = ActiveShipping::Package.new( weight * 16,          # 7.5 lbs, times 16 oz/lb.
                               [height, length, width],     # 15x10x4.5 inches
                               units: :imperial)  #\
       packages << pack
@@ -39,7 +39,8 @@ class ShippingController < ApplicationController
 
     ups_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    render json: [ups_rates]
+    render json: ups_rates
+
   end
 
 end
