@@ -1,6 +1,7 @@
 class ShippingController < ApplicationController
 
   def index
+    render :text => "hello world"
   end
 
   # use suggestions_controller from tunes-takeout as inspiration
