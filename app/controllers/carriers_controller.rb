@@ -2,12 +2,10 @@ class CarriersController < ApplicationController
   def calculate
     zip = params[:zip]
     items = params[:items]
-    options = {
-      "owl_delivery" => calculate_usps(zip, items),
-      "unicorn_delivery" => calculate_fedex(zip, items),
-      "drone_delivery" => calculate_drone(zip, items)
-    }
-    render json: options.as_json, :status => :ok
+    estimate = {
+      "usps" => Carrier.estimate_usps_shipping(5, 98104),
+      "ups" => Carrier.estimate_ups_shipping(5, 98104)}
+    render json: estimate.as_json, :status => :ok
   end
 
   def selected

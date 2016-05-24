@@ -41,6 +41,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'pry-rails'
   gem 'minitest-reporters'
+  gem 'dotenv-rails'
 end
 
 group :development do
