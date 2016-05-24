@@ -7,4 +7,5 @@ class CarrierTest < ActiveSupport::TestCase
     assert_instance_of Array, shipping_est
   end
 
+  
 end
