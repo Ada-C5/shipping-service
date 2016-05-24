@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class CarrierTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+ 
+  test "returns array" do
+    shipping_est = Carrier.estimate_shipping(4, 98126)
+    assert_instance_of Array, shipping_est
+  end
+
 end

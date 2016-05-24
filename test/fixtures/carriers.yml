@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: Drone
-  cost_per_item: 5
-  base_delivery_cost: 1.5
+# one:
+#   name: Drone
+#   cost_per_item: 5
+#   base_delivery_cost: 1.5
 
-two:
-  name: Owl
-  cost_per_item: 2
-  base_delivery_cost: 1.5
+# two:
+#   name: Owl
+#   cost_per_item: 2
+#   base_delivery_cost: 1.5
