@@ -1,0 +1,10 @@
+shipping_info:
+  country: USA
+  state: WA
+  city: Seattle
+  zip: 98115
+package_info:
+  weight: 2
+  height: 15
+  width: 15
+  units: imperial

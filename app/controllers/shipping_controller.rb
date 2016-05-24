@@ -1,7 +1,7 @@
 class ShippingController < ApplicationController
 
   def index
-    render :text => "hello world"
+    render json: ["hello world"]
   end
 
   def search
