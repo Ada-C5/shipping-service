@@ -1,6 +1,6 @@
 class ShippingController < ApplicationController
 
-  def search
+  def rates
     packages = []
     dest_country = "US"
     dest_state = params[:order][:state]
@@ -23,7 +23,7 @@ class ShippingController < ApplicationController
           zip: dest_zip)
 
     orderitems = params[:order][:orderitems]
-    
+
     orderitems.each do |item|
       weight = item[:weight]
       height = item[:height]
