@@ -28,7 +28,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'pg', '~> 0.15'
 
-gem 'sqlite3'
+# gem 'sqlite3'
+
+gem 'active_shipping'
 
 gem 'traceroute'
 
