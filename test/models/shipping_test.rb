@@ -13,7 +13,9 @@ class ShippingTest < ActiveSupport::TestCase
     end
 
     it "shuld return an instance of Fedex", :vcr do
-      fedex = ActiveShipping::FedEx.new(login: '999999999', password: '7777777', key: '1BXXXXXXXXXxrcB', account: '51XXXXX20')
+      fedex = ActiveShipping::FedEx.new(login: ENV['FEDEX_METER_NUMBER'],
+      password: ENV['FEDEX_TEST_PASSWORD'], key: ENV['FEDEX_TEST_KEY'], account: ENV['FEDEX_ACCOUNT_NUMBER'])
+      assert fedex.is_a? ActiveShipping::FedEx
     end
 
   end
