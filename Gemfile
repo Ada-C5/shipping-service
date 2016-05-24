@@ -28,7 +28,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+gem 'active_shipping'
+gem 'httparty'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -39,7 +40,7 @@ group :development, :test do
 end
 
 group :development do
-    gem "pry-rails"
+  gem "pry-rails"
   gem "better_errors"
   gem "binding_of_caller"
   # Access an IRB console on exception pages or by using <%= console %> in views

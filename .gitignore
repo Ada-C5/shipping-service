@@ -89,3 +89,6 @@ bower.json
 /log/*
 !/log/.keep
 /tmp
+
+#ignore env
+/.env
