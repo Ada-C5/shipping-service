@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/quotes' => 'shipping#quotes'
   get '/usps' => 'shipping#usps', as: "usps"
+  get '/fedex' => 'shipping#fedex', as: "fedex"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
