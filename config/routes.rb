@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
 
   root 'shipping#index'
+  get '/shipping/search' => 'shipping#search', as: :search 
+
+
+
+  # resources :shipping, only: [:index, :search] #do
+  #   collection do
+  #     post "search"
+  #   end
+  # end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
