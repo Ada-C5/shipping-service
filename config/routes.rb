@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root 'shipping#index'
-  get '/shipping/search' => 'shipping#search', as: :search 
+  post '/shipping/search' => 'shipping#search', as: :search 
 
 
 

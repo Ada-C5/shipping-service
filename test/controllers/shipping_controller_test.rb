@@ -1,18 +1,51 @@
 require 'test_helper'
 
-class ShippingControllerTest < ActionController::TestCase
-  setup do
-    @request.headers['Accept'] = Mime::JSON
-    @request.headers['Content-Type'] = Mime::JSON.to_s
 
-    get :index
-    @body = JSON.parse(response.body)
+module ShippingControllerTest
+  class IndexAction < ActionController::TestCase
+    setup do
+      @request.headers['Accept'] = Mime::JSON
+      @request.headers['Content-Type'] = Mime::JSON.to_s
+
+      get :index
+      @body = JSON.parse(response.body)
+    end
+
+    test "index returns 200" do 
+      get :index
+      assert_response :success 
+    end
   end
 
-  test "index returns 200" do 
-    get :index
-    assert_response :success 
-  end
+  # class SearchAction < ActionController::TestCase
+  #   setup do
+  #     @request.headers['Accept'] = Mime::JSON
+  #     @request.headers['Content-Type'] = Mime::JSON.to_s
+
+  #       @body = {
+  #         shipping_info: {
+  #           country: USA,
+  #           state: WA,
+  #           city: Seattle,
+  #           zip: 98115
+  #           },
+  #         package_info: {
+  #           weight: 2,
+  #           height: 15,
+  #           width: 15,
+  #           units: :imperial
+  #           }
+  #         }
+
+  #     get :search
+  #     @body = JSON.parse(response.body)
+  #   end
+
+  #   # test "index returns 200" do 
+  #   #   get :index
+  #   #   assert_response :success 
+  #   # end
+  # end
 
 
 
@@ -31,4 +64,5 @@ class ShippingControllerTest < ActionController::TestCase
   #     assert_equal keys, @body.map(&:keys).flatten.uniq.sort
   #   end
   # end
+
 end
