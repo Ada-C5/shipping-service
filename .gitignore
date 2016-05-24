@@ -19,7 +19,7 @@ build/
 /_yardoc/
 /doc/
 /rdoc/
-.env
+
 
 ## Environment normalisation:
 /.bundle/

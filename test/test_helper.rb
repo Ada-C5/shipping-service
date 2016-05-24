@@ -3,7 +3,7 @@ SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] ||= 'test'
 require 'minitest/spec'
-require 'minispec-metadata'
+# require 'minispec-metadata'
 require 'minitest/reporters'
 
 require File.expand_path('../../config/environment', __FILE__)

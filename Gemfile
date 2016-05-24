@@ -40,7 +40,7 @@ group :development, :test do
   gem 'byebug'
   gem 'minitest-reporters'
   gem 'sqlite3'
-  gem 'dotenv_rails'
+  gem 'dotenv-rails'
 end
 
 group :test do
