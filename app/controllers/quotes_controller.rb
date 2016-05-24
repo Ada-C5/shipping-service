@@ -7,9 +7,14 @@ class QuotesController < ApplicationController
   end
 
   def show
-    carrier = "some carrier"
-    quote = Quote.get_rate(carrier)
-    render json: quotes.as_json(except: response)
+    carrier = "USPS"
+    address = "(JSONObjectRecieved).address"
+
+    quote = Quote.get_rate(carrier, address)
+    render json: quote.as_json(except: request)
+
+    # quote.save
+    # quote.request = { "carrier" => "test_carrier", "address" => "test_address" }.to_json
   end
 
   def selection
