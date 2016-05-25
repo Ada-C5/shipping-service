@@ -10,6 +10,7 @@ class ShippingController < ApplicationController
   end
 
   def search
+    # save post request to db
     origin_params = params["origin_info"]
     destination_params = params["destination_info"]
     weight = params["package_info"]["weight"].to_i
@@ -21,15 +22,19 @@ class ShippingController < ApplicationController
 
     usps_response = USPS.find_rates(@origin, @destination, @packages)
     ups_response = UPS.find_rates(@origin, @destination, @packages)
-    puts ups_response
-    ups_rates = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+
+
+    # put competing rates in array? -- hash? to send back as json
+    # save post response to db
+    render json: []
+  end
+
+    # puts ups_response
+    # ups_rates = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
     # puts usps_response.rates
     # ups_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-    puts ups_rates
-
-    render json: []
-  end
+    # puts ups_rates
 
   # use suggestions_controller from tunes-takeout as inspiration
   # these methods should take in json from betsy and query ups/usps via wrappers then return info to betsy 
