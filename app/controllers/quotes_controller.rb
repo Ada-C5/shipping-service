@@ -15,7 +15,7 @@ class QuotesController < ApplicationController
       # }
       #
     quote = Quote.get_rate(request)
-    render json: quote.as_json(only: response)
+    render json: quote.as_json(only: "response")
   end
 
   def selection
