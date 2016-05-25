@@ -1,10 +1,19 @@
+require 'active_shipping'
+
 class ShippingController < ApplicationController
+   USPS = ActiveShipping::USPS.new(login: ENV['USPS_USERNAME'])
 
   def index
     render json: ["hello world"]
   end
 
   def search
+    @origin = params["origin_info"]
+    @destination = params["destination_info"]
+    @packages = ActiveShipping::Package.new(params["package_info"]["weight"], params["package_info"]["dimensions"], params["package_info"]["units"])
+
+    usps_response = USPS.find_rates(@origin, @destination, @packages)
+    puts usps_response
     render json: []
   end
 

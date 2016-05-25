@@ -4,8 +4,8 @@ require 'test_helper'
 module ShippingControllerTest
   class IndexAction < ActionController::TestCase
     setup do
-      @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
+      @request.headers['Accept'] = Mime::JSON
 
       get :index
       @body = JSON.parse(response.body)
