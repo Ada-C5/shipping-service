@@ -8,20 +8,20 @@ module QuotesControllerTest
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
       get :show, carrier: "USPS", shipping: {
-            "carrier": "USPS",
-            "address": { country: "US", state: "WA", city: "Seattle", zip: "98122" }
+            carrier: "USPS",
+            address: { country: "US", state: "WA", city: "Seattle", zip: "98122" }
           }.to_json
 
-      # @body = JSON.parse(@response.body)
+      @body = JSON.parse(response.body)
     end
 
     test "can get #show" do
       assert_response :success
     end
 
-    # test "it should return a Quote object" do
-    #   assert_instance_of JSON, @body
-    # end
+    test "it should return a Quote object" do
+      assert_instance_of Hash, @body
+    end
 
   end
 
