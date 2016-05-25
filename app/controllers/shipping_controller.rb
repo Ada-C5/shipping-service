@@ -1,5 +1,5 @@
 class ShippingController < ApplicationController
-
+skip_before_filter  :verify_authenticity_token
   def rates
     packages = []
     dest_country = "US"
@@ -38,11 +38,12 @@ class ShippingController < ApplicationController
     ups_response = ups.find_rates(origin, destination, packages)
     ups_rates = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    usps = ActiveShipping::USPS.new(login: '316ADADE2674')
+    usps = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
     usps_response = usps.find_rates(origin, destination, packages)
     usps_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    render json: [ups_rates, usps_rates]
+    render json: [ups_rates, usps_rates].as_json
+
 
   end
 
