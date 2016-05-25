@@ -4,9 +4,11 @@ class QuotesController < ApplicationController
     JSON.parse
 
 
-    @packages = [
-        ActiveShipping::Package.new(params[:something][:height], [93,10], cylinder: true),
-        ActiveShipping::Package.new(7.5 * 16, [15, 10, 4.5], units: :imperial)
-        ]
+    @package = ActiveShipping::Package.new(params[:product][:weight],[params[:product][:width], params[:product][:height]])
+
+    @origin = ActiveShipping::Location.new(params[:origin][:street_address],params[:origin][:city],params[:origin][:state],params[:origin][:zip])
+
+    @destination = ActiveShipping::Location.new(params[:destination][:street_address],params[:destination][:city],params[:destination][:state],params[:destination][:zip])
+  
   end
 end
