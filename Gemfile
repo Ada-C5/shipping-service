@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'dotenv-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -47,7 +48,6 @@ group :development, :test do
   gem 'minitest-vcr'
   gem 'minitest-reporters'
   gem 'webmock'
-  gem 'dotenv-rails'
 end
 
 group :development do
