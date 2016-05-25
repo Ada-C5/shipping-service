@@ -15,7 +15,11 @@ class QuotesController < ApplicationController
       # }
       #
     quote = Quote.get_rate(request)
-    render json: quote.as_json(only: "response")
+    # if quote.status == 200
+      render json: quote.response, status: quote.status
+    # elsif quote.status == 400
+      # render status: 400
+    #end
   end
 
   def selection
