@@ -9,13 +9,12 @@ class QuotesController < ApplicationController
   def show
     request = params["shipping"]
     #
-    #   "shipping": {
+      # "shipping": {
       # "carrier": "USPS",
       # "address": { country: "US", state: "WA", city: "Seattle", zip: "98122" }
       # }
-    #
+      #
     quote = Quote.get_rate(request)
-
     render json: quote.as_json(only: response)
   end
 
