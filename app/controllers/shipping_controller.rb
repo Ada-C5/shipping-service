@@ -10,7 +10,6 @@ class ShippingController < ApplicationController
   end
 
   def search
-    # save post request to db
     origin_params = params["origin_info"]
     destination_params = params["destination_info"]
     weight = params["package_info"]["weight"].to_i
@@ -23,7 +22,10 @@ class ShippingController < ApplicationController
     usps_response = USPS.find_rates(@origin, @destination, @packages)
     ups_response = UPS.find_rates(@origin, @destination, @packages)
 
+    # usps_response.class
 
+    # response = [usps_response, ups_response]
+    # log_request_response(params, response)
     # put competing rates in array? -- hash? to send back as json
     # save post response to db
     render json: []
@@ -37,7 +39,7 @@ class ShippingController < ApplicationController
     # puts ups_rates
 
   # use suggestions_controller from tunes-takeout as inspiration
-  # these methods should take in json from betsy and query ups/usps via wrappers then return info to betsy 
+  # these methods should take in json from betsy and query ups/usps via wrappers then return info to betsy
  #  packages = [
  #  ActiveShipping::Package.new(100,               # 100 grams
  #                              [93,10],           # 93 cm long, 10 cm diameter
