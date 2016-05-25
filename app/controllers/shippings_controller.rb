@@ -18,10 +18,23 @@ class ShippingsController < ApplicationController
   # end
 
   def info
-    # look = params
-    # if params.nil?
-    # @hi = "hello there"
-    render json: params[:body][:products_specs].as_json
+
+    data_packages = params[:body][:products_specs]
+    data_destination = params[:body][:destination]
+    data_origin = params[:body][:origin]
+
+  fedex_result = ShippingWrapper.create_fedex(data_origin, data_destination, data_packages)
+
+  ups_result = ShippingWrapper.create_fedex(data_origin, data_destination, data_packages)
+    total_result = {
+      fedex_result: fedex_result,
+
+      ups_result: ups_result
+    }
+    # binding.pry
+
+    render json: total_result.as_json
+    # render json: params.as_json
     # render json:
     # , status: :no_content
     # end
