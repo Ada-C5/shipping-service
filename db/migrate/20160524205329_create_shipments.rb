@@ -4,7 +4,7 @@ class CreateShipments < ActiveRecord::Migration
       t.string :order_id
       t.string :carrier
       t.decimal :rate
-      t.string :delivery
+      t.string :delivery_date
 
       t.timestamps null: false
     end
