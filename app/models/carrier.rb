@@ -10,7 +10,7 @@ class Carrier
 
   def self.estimate_usps_shipping(items, state, city, zip)
 
-    packages = ActiveShipping::Package.new(items * 14, [93, 10], cylinder: false)
+    packages = ActiveShipping::Package.new(items.to_i * 14, [93, 10], cylinder: false)
     ORIGIN
     destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
 
@@ -22,7 +22,7 @@ class Carrier
   end
 
   def self.estimate_ups_shipping(items, state, city, zip)
-    packages = ActiveShipping::Package.new(items * 14, [93, 10], cylinder: false)
+    packages = ActiveShipping::Package.new(items.to_i * 14, [93, 10], cylinder: false)
     ORIGIN
     destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
 
