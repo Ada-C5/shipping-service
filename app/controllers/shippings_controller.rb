@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/shippingwrapper.rb"
+
 class ShippingsController < ApplicationController
 
   def index
@@ -17,7 +19,7 @@ class ShippingsController < ApplicationController
 
   def info
     look = params
-    render json: look.as_json
+    render json: [], status: :success
   end
  #
  # origin = ActiveShipping::Location.new(country: 'US',
