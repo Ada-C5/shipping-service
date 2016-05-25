@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160524230003) do
 
+  # put in betsy order_id so we can see what was quoted to us?
+  # So that we can find it
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
