@@ -1,7 +1,9 @@
 require 'active_shipping'
 
 class ShippingController < ApplicationController
-   USPS = ActiveShipping::USPS.new(login: ENV['USPS_USERNAME'])
+  USPS = ActiveShipping::USPS.new(login: ENV['USPS_USERNAME'])
+  UPS = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV["UPS_KEY"])
+
 
   def index
     render json: ["hello world"]
@@ -18,9 +20,14 @@ class ShippingController < ApplicationController
     @destination = ActiveShipping::Location.new(destination_params)
 
     usps_response = USPS.find_rates(@origin, @destination, @packages)
-    puts usps_response.rates
-    ups_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    ups_response = UPS.find_rates(@origin, @destination, @packages)
+    puts ups_response
+    ups_rates = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+
+    # puts usps_response.rates
+    # ups_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
     puts ups_rates
+
     render json: []
   end
 
