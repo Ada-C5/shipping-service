@@ -8,16 +8,19 @@ class ShippingController < ApplicationController
   end
 
   def search
-    @origin_params = params["origin_info"]
-    @destination_params = params["destination_info"]
+    origin_params = params["origin_info"]
+    destination_params = params["destination_info"]
     weight = params["package_info"]["weight"].to_i
     dimensions = [params["package_info"]["height"].to_i, params["package_info"]["width"].to_i, params["package_info"]["length"].to_i]
 
     @packages = ActiveShipping::Package.new(weight * 16, dimensions, units: :imperial)
-    origin = ActiveShipping::Location.new
+    @origin = ActiveShipping::Location.new(origin_params)
+    @destination = ActiveShipping::Location.new(destination_params)
 
     usps_response = USPS.find_rates(@origin, @destination, @packages)
-    puts usps_response
+    puts usps_response.rates
+    ups_rates = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    puts ups_rates
     render json: []
   end
 
