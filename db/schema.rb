@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524205329) do
+ActiveRecord::Schema.define(version: 20160525213608) do
 
   create_table "shipments", force: :cascade do |t|
     t.string   "order_id"
-    t.string   "carrier"
-    t.decimal  "rate"
-    t.string   "delivery_date"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "input_rates"
+    t.string   "output_rates"
+    t.string   "input_confirm"
+    t.string   "output_confirm"
   end
 
 end
