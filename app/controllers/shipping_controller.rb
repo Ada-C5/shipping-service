@@ -8,9 +8,13 @@ class ShippingController < ApplicationController
   end
 
   def search
-    @origin = params["origin_info"]
-    @destination = params["destination_info"]
-    @packages = ActiveShipping::Package.new(params["package_info"]["weight"], params["package_info"]["dimensions"], params["package_info"]["units"])
+    @origin_params = params["origin_info"]
+    @destination_params = params["destination_info"]
+    weight = params["package_info"]["weight"].to_i
+    dimensions = [params["package_info"]["height"].to_i, params["package_info"]["width"].to_i, params["package_info"]["length"].to_i]
+
+    @packages = ActiveShipping::Package.new(weight * 16, dimensions, units: :imperial)
+    origin = ActiveShipping::Location.new
 
     usps_response = USPS.find_rates(@origin, @destination, @packages)
     puts usps_response
