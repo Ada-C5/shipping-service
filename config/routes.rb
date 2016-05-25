@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+ get "shipping/valid_json?" => "shipping#valid_json?"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
