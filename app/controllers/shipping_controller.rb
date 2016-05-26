@@ -1,4 +1,5 @@
 require 'active_shipping'
+require_relative '../models/post_log.rb'
 
 class ShippingController < ApplicationController
   USPS = ActiveShipping::USPS.new(login: ENV['USPS_USERNAME'])
@@ -22,13 +23,18 @@ class ShippingController < ApplicationController
     usps_response = USPS.find_rates(@origin, @destination, @packages)
     ups_response = UPS.find_rates(@origin, @destination, @packages)
 
-    # usps_response.class
+    usps_hash = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    ups_hash = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    response = [usps_hash, ups_hash]
 
-    # response = [usps_response, ups_response]
-    # log_request_response(params, response)
+    log_request_response(params, response)
     # put competing rates in array? -- hash? to send back as json
     # save post response to db
-    render json: []
+    render json: response
+  end
+
+  def log_request_response(request, response)
+    PostLog.create(post_request: request, post_response: response)
   end
 
     # puts ups_response
@@ -40,26 +46,4 @@ class ShippingController < ApplicationController
 
   # use suggestions_controller from tunes-takeout as inspiration
   # these methods should take in json from betsy and query ups/usps via wrappers then return info to betsy
- #  packages = [
- #  ActiveShipping::Package.new(100,               # 100 grams
- #                              [93,10],           # 93 cm long, 10 cm diameter
- #                              cylinder: true),   # cylinders have different volume calculations
-
- #  ActiveShipping::Package.new(7.5 * 16,          # 7.5 lbs, times 16 oz/lb.
- #                              [15, 10, 4.5],     # 15x10x4.5 inches
- #                              units: :imperial)  # not grams, not centimetres
- # ]
-
- # # You live in Beverly Hills, he lives in Ottawa
- # origin = ActiveShipping::Location.new(country: 'US',
- #                                       state: 'CA',
- #                                       city: 'Beverly Hills',
- #                                       zip: '90210')
-
- # destination = ActiveShipping::Location.new(country: 'CA',
- #                                            province: 'ON',
- #                                            city: 'Ottawa',
- #                                            postal_code: 'K1P 1J1')
-
-
 end
