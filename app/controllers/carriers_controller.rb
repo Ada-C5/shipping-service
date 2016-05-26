@@ -3,23 +3,31 @@ skip_before_filter  :verify_authenticity_token
 
   def index
 
-    ups             = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
-    ups_rates       = get_rates(ups)
+    ups         = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
+    ups_rates   = get_rates(ups)
 
-    usps            = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'], test_mode: true)
-    usps_rates      = get_rates(usps)
+    usps        = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'], test_mode: true)
+    usps_rates  = get_rates(usps)
 
-    fedex           = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_ACCESS_KEY"], account:ENV["FEDEX_ACCOUNT"], test: true )
-    fedex_rates     = get_rates(fedex)
+    fedex       = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_ACCESS_KEY"], account:ENV["FEDEX_ACCOUNT"], test: true )
+    fedex_rates = get_rates(fedex)
 
-    request   = [ups, usps, fedex].as_json 
-    response  = [ups_rates, usps_rates, fedex_rates].as_json
+    request     = [ups, usps, fedex].as_json 
+    response    = [ups_rates, usps_rates, fedex_rates].as_json
     Carrier.create.by(request, response)
     
-    render json: current_rates
+    if response.status.to_i.between?(200,299)
+      render json: response.as_json, status: response.status
+    else
+      render json: [], message: "An Error Has Occured, Please Try Again Later :(", status: response.status
+    end
   end
 
   def choose_rates
+    # this is a post from betsy , figure out how to get at the pieces
+    request = "This is the quote picked by the user".as_json
+    response = response.body
+    Carrier.create.by(request, response)
     render json: [] 
   end 
 
@@ -44,9 +52,9 @@ skip_before_filter  :verify_authenticity_token
 
     order_items.each do |item|
       weight    = item[:weight].to_i
-      height    = item[:height].to_i
       length    = item[:length].to_i
       width     = item[:width].to_i
+      height    = item[:height].to_i
       packing   = ActiveShipping::Package.new( weight * 16,[length, width, height], units: :imperial )
       packages  << packing
     end
