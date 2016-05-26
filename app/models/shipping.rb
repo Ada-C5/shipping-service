@@ -26,9 +26,9 @@ class Shipping < ActiveRecord::Base
       city: params["origin"]["city"],
       zip: params["origin"]["zip"]
     )
-    destination = ActiveShipping::Location.new(params["destination"].merge("country" => "US")
+    destination = ActiveShipping::Location.new(
       country: "US",
-      state: ["origin"]["state"],
+      state: params["origin"]["state"],
       city: params["origin"]["city"],
       zip: params["origin"]["zip"]
       )

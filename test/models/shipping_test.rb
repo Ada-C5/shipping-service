@@ -36,7 +36,6 @@ class ShippingTest < ActiveSupport::TestCase
       it "should return an array when finding USPS rates", :vcr do
         response = @usps.find_rates(@origin, @destination, @packages)
         usps_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-        binding.pry
         assert usps_rates.is_a? Array
       end
 
