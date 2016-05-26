@@ -7,30 +7,20 @@ class ShippingsController < ApplicationController
   # end
   end
 
-  # def ups
-  #   @ups_info = ShippingWrapper.login_ups
-  #   @ups_info.find_rates
-  # end
-  #
-  # def fedex
-  #   @fedex_info = ShippingWrapper.login_fedex
-  #   @fedex_info.find_rates
-  # end
-
   def info
 
-    data_packages = params[:body][:products_specs]
-    data_destination = params[:body][:destination]
-    data_origin = params[:body][:origin]
+    data_packages = params[:products_specs]
+    data_destination = params[:destination]
+    data_origin = params[:origin]
 
-  fedex_result = ShippingWrapper.create_fedex(data_origin, data_destination, data_packages)
+    # binding.pry
+    total_result = ShippingWrapper.create_ups(data_origin, data_destination, data_packages)
 
-  ups_result = ShippingWrapper.create_fedex(data_origin, data_destination, data_packages)
-    total_result = {
-      fedex_result: fedex_result,
-
-      ups_result: ups_result
-    }
+    # ups_result = ShippingWrapper.create_fedex(data_origin, data_destination, data_packages)
+    # total_result = {
+      # fedex_result: fedex_result,
+    #   ups_result: ups_result
+    # }
     # binding.pry
 
     render json: total_result.as_json
