@@ -14,7 +14,7 @@ class QuotesController < ApplicationController
       # "address": { country: "US", state: "WA", city: "Seattle", zip: "98122" }
       # }
       #
-    quote = Quote.get_rate(request)
+    quote = Quote.get_rates(request)
     if quote.status.to_i.between?(200,299) # method to check good responses
       render json: quote.response.as_json, status: quote.status
     else

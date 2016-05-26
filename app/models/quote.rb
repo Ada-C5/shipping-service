@@ -1,30 +1,18 @@
 class Quote < ActiveRecord::Base
 
-  def self.get_rate(request)
+  def self.get_rates(request)
     parsed_request = JSON.parse(request)
-    origin = Quote.get_origin
-
-    address = parsed_request["address"]
-    # check_country(address)
-    # check_zip(address)
-
-    destination = Quote.get_destination(address) #change to address when not testing
-    packages = Quote.get_packages
-
-    carrier = parsed_request["carrier"].downcase #set from request
 
     begin
 
-      if carrier == "usps"
-        usps = ActiveShipping::USPS.new(login: ENV["USPS_USERNAME"], password: ENV["USPS_PASSWORD"])
-        carrier_quote = usps.find_rates(origin, destination, packages)
-      elsif carrier == "fedex"
-        fedex = ActiveShipping::FEDEX.new(login: ENV["FEDEX_USERNAME"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_TEST_KEY"], account: ENV["FEDEX_ACCOUNT_NUMBER"])
-        carrier_quote = fedex.find_rates(origin, destination, packages)
-      end
+      carrier_responses = [
+        { "fedex" => fedex_rates },
+        { "usps" => usps_rates }
+      ]
+
       quote = self.new
       quote.request = request
-      quote.response = [{ "#{carrier}" => carrier_quote.rates.sort_by(&:price).collect { |rate| [rate.service_name, rate.price] } }].to_json
+      quote.response = carrier_responses.to_json
       quote.status = 200
       quote.save
       quote
@@ -54,6 +42,27 @@ class Quote < ActiveRecord::Base
   end
 
   private
+
+  def get_rates_from_carrier(carrier)
+    address = {"country"=>"US", "state"=>"WA", "city"=>"Seattle", "zip"=>"98122"}
+    origin = Quote.get_origin
+    packages = Quote.get_packages
+    # address = parsed_request["address"]
+    destination = Quote.get_destination(address) #change to address when not testing
+
+    response = carrier.find_rates(origin, destination, packages)
+    response.rates.sort_by(&:price).collect { |rate| [rate.service_name, rate.price] }
+  end
+
+  def fedex_rates
+    fedex = ActiveShipping::FedEx.new(login: ENV["FEDEX_USERNAME"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_TEST_KEY"], account: ENV["FEDEX_ACCOUNT_NUMBER"], test: true)
+    get_rates_from_carrier(fedex)
+  end
+
+  def usps_rates
+    usps = ActiveShipping::USPS.new(login: ENV["USPS_USERNAME"], password: ENV["USPS_PASSWORD"])
+    get_rates_from_carrier(usps)
+  end
 
   def check_country(address)
     if address["country"].nil? || address["country"].empty?
