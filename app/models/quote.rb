@@ -24,7 +24,7 @@ class Quote < ActiveRecord::Base
       end
       quote = self.new
       quote.request = request
-      quote.response = carrier_quote.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}.to_json
+      quote.response = { "#{carrier}" => carrier_quote.rates.sort_by(&:price).collect { |rate| [rate.service_name, rate.price] } }.to_json
       quote.status = 200
       quote.save
       quote

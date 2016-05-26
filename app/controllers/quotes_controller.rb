@@ -15,13 +15,11 @@ class QuotesController < ApplicationController
       # }
       #
     quote = Quote.get_rate(request)
-    # if quote.status == 200 # method to check good responses
-
-      render json: quote.response, status: quote.status
-    # elsif quote.status == 400 # method to check bad responses
-      # render json: message: "Error Message", status: quote.status
-      # render status: 400
-    #end
+    if quote.status.to_i.between?(200,299) # method to check good responses
+      render json: quote.response.as_json, status: quote.status
+    else
+      render json: [], message: "Error Message", status: quote.status
+    end
   end
 
   def selection
