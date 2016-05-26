@@ -1,4 +1,8 @@
 class Carrier < ActiveRecord::Base
+  validates :name, presence: true
+  validates :request, presence: true
+  validates :response, presence: true
+
   # logging?? 
   def save_data
     carrier          = Carrier.new 
