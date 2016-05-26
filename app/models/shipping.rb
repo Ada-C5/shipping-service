@@ -1,8 +1,8 @@
-class Shipping < ActiveRecord::Base
+class Shipping
 
 
-  def initialize(package,origin,destination)
-    @package = package
+  def initialize(packages,origin,destination)
+    @packages = packages
     @origin = origin
     @destination = destination
     @usps = ActiveShipping::USPS.new(login: ENV["USPS_LOGIN_KEY"])
@@ -12,12 +12,18 @@ class Shipping < ActiveRecord::Base
 
   def self.create_by_params(params)
 
-    package_info = params.keys[0] # this is a string
+    
+    # getting the actual JSON we want from that big ugly params hash
+    package_info = params[:request] # this is a string
     params = JSON.parse(package_info)
+
+    # change zip code to integer because of numeric data error... is this actually needed?
     params["origin"]["zip"] = params["origin"]["zip"].to_i
-    # binding.pry
     params["destination"]["zip"] = params["destination"]["zip"].to_i
-    package = ActiveShipping::Package.new(params["product"]["weight"],[params["product"]["width"], params["product"]["height"]])
+
+    packages = params["products"].map do |product|
+      ActiveShipping::Package.new(product["weight"], [product["width"], product["height"]])
+    end
 
     # origin = ActiveShipping::Location.new( params["origin"].merge("country" => "US"))
     origin = ActiveShipping::Location.new(
@@ -32,14 +38,14 @@ class Shipping < ActiveRecord::Base
       city: params["origin"]["city"],
       zip: params["origin"]["zip"]
       )
-    Shipping.new(package,origin,destination)
+    Shipping.new(packages,origin,destination)
   end
 
 
   def find_rates
     [@usps,@fedex].map do |carrier|
       # binding.pry
-      carrier.find_rates(@origin,@destination,@package).rates.sort_by(&:price).map do |rate|
+      carrier.find_rates(@origin,@destination,@packages).rates.sort_by(&:price).map do |rate|
         {service_name: rate.service_name, price: rate.price}
        end
      end.flatten
