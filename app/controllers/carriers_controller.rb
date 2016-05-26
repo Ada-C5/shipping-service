@@ -2,7 +2,6 @@ class CarriersController < ApplicationController
 skip_before_filter  :verify_authenticity_token
 
   def index
-
     ups         = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
     ups_rates   = get_rates(ups)
 
@@ -16,11 +15,11 @@ skip_before_filter  :verify_authenticity_token
     response    = [ups_rates, usps_rates, fedex_rates].as_json
     Carrier.create.by(request, response)
     
-    if response.status.to_i.between?(200,299)
+    # if response.status.to_i.between?(200,299)
       render json: response.as_json, status: response.status
-    else
-      render json: [], message: ":( An Error Has Occured, Please Try Again Later :(", status: response.status
-    end
+    # else
+    #   render json: [], message: ":( An Error Has Occured, Please Try Again Later :(", status: response.status
+    # end
   end
 
   def choose_rates

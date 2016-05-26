@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CarrierTest < ActiveSupport::TestCase
-
   test "requires a request" do
     carrier = Carrier.new
     refute carrier.valid?
