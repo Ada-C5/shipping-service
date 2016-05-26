@@ -2,13 +2,20 @@ class Quote < ActiveRecord::Base
 
   def self.get_rates(request)
     parsed_request = JSON.parse(request)
-
+    @origin = Quote.get_origin
+    @packages = Quote.get_packages
+    address = parsed_request["address"]
+    @destination = Quote.get_destination(address) #change to address when not testing
     begin
-
       carrier_responses = [
-        { "fedex" => fedex_rates },
-        { "usps" => usps_rates }
+        {
+          "fedex" => fedex_rates
+        },
+        {
+         "usps" => usps_rates
+        }
       ]
+      # binding.pry
 
       quote = self.new
       quote.request = request
@@ -44,13 +51,7 @@ class Quote < ActiveRecord::Base
   private
 
   def get_rates_from_carrier(carrier)
-    address = {"country"=>"US", "state"=>"WA", "city"=>"Seattle", "zip"=>"98122"}
-    origin = Quote.get_origin
-    packages = Quote.get_packages
-    # address = parsed_request["address"]
-    destination = Quote.get_destination(address) #change to address when not testing
-
-    response = carrier.find_rates(origin, destination, packages)
+    response = carrier.find_rates(@origin, @destination, @packages)
     response.rates.sort_by(&:price).collect { |rate| [rate.service_name, rate.price] }
   end
 
