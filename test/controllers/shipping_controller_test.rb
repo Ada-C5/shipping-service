@@ -43,19 +43,22 @@ module ShippingControllerTest
           }
         }
 
-      get :search
+      post :search, @body
       @body = JSON.parse(response.body)
     end
 
-    test "there are four things in origin_params" do
-      assert_equal 4, @body[origin_params].keys
+    test "body has two elements" do
+      assert_equal 2, @body.length
     end
 
+    test "data being sent do API is JSON" do
+      assert_match 'application/json', response.header['Content-Type']
+    end
 
-
-    # test "data being sent do API is JSON" do
-    #   assert_match 'application/json', response.header['Content-Type']
-    # end
+    test "body is an array of info arrays" do
+      assert_instance_of Array, @body
+      assert_equal Array, @body.map(&:class).uniq.first
+    end
   end
 
 
