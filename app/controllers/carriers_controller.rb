@@ -19,7 +19,7 @@ skip_before_filter  :verify_authenticity_token
     if response.status.to_i.between?(200,299)
       render json: response.as_json, status: response.status
     else
-      render json: [], message: "An Error Has Occured, Please Try Again Later :(", status: response.status
+      render json: [], message: ":( An Error Has Occured, Please Try Again Later :(", status: response.status
     end
   end
 
