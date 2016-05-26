@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
-  resources :shippings, only: [:]
+# namespace :api do
+  resources :shippings do
+    collection do
+      post 'shipping_rates'
+    end
+  end
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
