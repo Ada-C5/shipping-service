@@ -25,6 +25,14 @@ skip_before_filter  :verify_authenticity_token
     orderitems = params[:order][:orderitems]
 
     orderitems.each do |item|
+      if item[:quantity] > 1
+      item[:quantity] -= 1
+      a = item.clone
+      orderitems.push a
+      end
+    end
+
+    orderitems.each do |item|
       weight = item[:weight].to_i
       height = item[:height].to_i
       length = item[:length].to_i
