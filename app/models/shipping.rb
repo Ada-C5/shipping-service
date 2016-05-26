@@ -1,25 +1,28 @@
 class Shipping < ActiveRecord::Base
 
-  def package_dimension(weight,length,shape)
-    package = ActiveShipping::Package.new(weight,length)
 
+  def initialize(package,origin,destination)
+    @package = package
+    @origin = origin
+    @destination = destination
+    @usps = ActiveShipping::USPS.new(login: ENV["USPS_LOGIN_KEY"])
+    @fedex = ActiveShipping::FedEx.new(login: ENV['FEDEX_METER_NUMBER'],
+    password: ENV['FEDEX_TEST_PASSWORD'], key: ENV['FEDEX_TEST_KEY'], account: ENV['FEDEX_ACCOUNT_NUMBER'], test: true)
   end
 
-  def origin_of_package(country,state,city,zip)
-    origin = ActiveShipping::Location.new(country: country, state: state, zip: zip)
-
-  end
-
-  def destination(country,state,city,zip)
-    destination =  ActiveShipping::Location.new(country: country,province: state,city: city,postal_code: zip)
-  end
-
-
-
-  def how_much_will_the_package_be_for_ups
-    ups = ActiveShipping::UPS.new(login: 'auntjudy', password: 'secret', key: 'xml-access-key')
-    response = ups.find_rates(origin, destination, packages)
+  def self.create_by_params(params)
+    package = ActiveShipping::Package.new(params[:product][:weight],[params[:product][:width], params[:product][:height]])
+    origin = ActiveShipping::Location.new( params[:origin].merge(:country => "US"))
+    destination = ActiveShipping::Location.new(params[:destination].merge(:country => "US"))
+    Shipping.new(package,origin,destination)
   end
 
 
+  def find_rates
+    [@usps,@fedex].map do |carrier|
+      carrier.find_rates(@origin,@destination,@package).rates.sort_by(&:price).map do |rate|
+        {service_name: rate.service_name, price: rate.price}
+       end
+     end.flatten
+  end
 end
