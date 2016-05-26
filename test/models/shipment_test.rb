@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class ShipmentTest < ActiveSupport::TestCase
+  test "gets ups rates" do
+    shipment = Shipment.ups_rates(
+    {weight: 10, height: 20, length: 30, width: 40},
+    {country: 'US', city: 'Overland Park', state: 'KS', zip: '66212'},
+    {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
+    )
+     assert_instance_of shipment, Array
+   end
   # test "requires a name" do
   #   generic_pet = Pet.new
   #   refute generic_pet.valid?

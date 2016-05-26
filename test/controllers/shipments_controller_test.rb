@@ -1,16 +1,16 @@
 require 'test_helper'
 
-module ShipmentsControllerTest < ActionController::TestCase
-# class IndexAction < ActionController::TestCase
-#     setup do
-#       @request.headers['Accept'] = Mime::JSON
-#       @request.headers['Content-Type'] = Mime::JSON.to_s
-#       get :index
-#     end
+module ShipmentsControllerTest
+class IndexAction < ActionController::TestCase
+    setup do
+      @request.headers['Accept'] = Mime::JSON
+      @request.headers['Content-Type'] = Mime::JSON.to_s
+      get :index
+    end
 
-#     test "can get #index" do
-#       assert_response :success
-#     end
+  test "gets ups rates" do
+     assert_instance_of shipping_rates, Array
+  end
 
 #     test "#index returns json" do
 #       assert_match 'application/json', response.header['Content-Type']
@@ -122,6 +122,6 @@ module ShipmentsControllerTest < ActionController::TestCase
 #     test "search term uses fuzzy match" do
 
 #     end
-#   end
+  end
 
 end

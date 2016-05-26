@@ -1,9 +1,23 @@
 Rails.application.routes.draw do
 
-  'products'
-  '/products/:id'
-  # need to confirm we'll be working with products instead of orderitems
-  # unfinished routes
+  get '/shipping_rates' => 'shipments#shipping_rates'
+  # Example return:
+  # @ups_rates = [["UPS Ground", 1777, nil],
+  #  ["UPS Three-Day Select",
+  #   4875,
+  #   Tue, 31 May 2016 00:00:00 +0000],
+  #  ["UPS Second Day Air",
+  #   7310,
+  #   Mon, 30 May 2016 00:00:00 +0000],
+  #  ["UPS Next Day Air Saver",
+  #   11610,
+  #   Fri, 27 May 2016 00:00:00 +0000],
+  #  ["UPS Next Day Air",
+  #   11947,
+  #   Fri, 27 May 2016 00:00:00 +0000],
+  #  ["UPS Next Day Air Early A.M.",
+  #   15029,
+  #   Fri, 27 May 2016 00:00:00 +0000]]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
