@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160526163916) do
     t.string   "selection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "status"
   end
 
 end
