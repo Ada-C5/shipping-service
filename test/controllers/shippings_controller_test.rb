@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class ShippingsControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @request.headers['Accept'] = Mime::JSON
+    @request.headers['Content-Type'] = Mime::JSON.to_s
+    get :index
+  end
 end
