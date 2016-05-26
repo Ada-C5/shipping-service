@@ -14,7 +14,12 @@ class ShippingsController < ApplicationController
 
     total_result = ShippingWrapper.create(data_origin, data_destination, data_packages)
 
-    render json: total_result.as_json
+    if total_result.fedex.nil?
+      render json: total_result.as_json(except: [:fedex, :ups]), status: :no_content
+    else
+      render json: total_result.as_json, status: :ok
+    end
+
 
   end
 
