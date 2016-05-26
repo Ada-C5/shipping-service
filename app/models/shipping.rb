@@ -19,15 +19,26 @@ class Shipping < ActiveRecord::Base
     params["destination"]["zip"] = params["destination"]["zip"].to_i
     package = ActiveShipping::Package.new(params["product"]["weight"],[params["product"]["width"], params["product"]["height"]])
 
-    origin = ActiveShipping::Location.new( params["origin"].merge("country" => "US"))
-    destination = ActiveShipping::Location.new(params["destination"].merge("country" => "US"))
+    # origin = ActiveShipping::Location.new( params["origin"].merge("country" => "US"))
+    origin = ActiveShipping::Location.new(
+      country: "US",
+      state: params["origin"]["state"],
+      city: params["origin"]["city"],
+      zip: params["origin"]["zip"]
+    )
+    destination = ActiveShipping::Location.new(params["destination"].merge("country" => "US")
+      country: "US",
+      state: ["origin"]["state"],
+      city: params["origin"]["city"],
+      zip: params["origin"]["zip"]
+      )
     Shipping.new(package,origin,destination)
   end
 
 
   def find_rates
     [@usps,@fedex].map do |carrier|
-      binding.pry
+      # binding.pry
       carrier.find_rates(@origin,@destination,@package).rates.sort_by(&:price).map do |rate|
         {service_name: rate.service_name, price: rate.price}
        end
