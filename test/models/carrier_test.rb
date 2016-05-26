@@ -13,4 +13,18 @@ class CarrierTest < ActiveSupport::TestCase
   end
 
 
+  def setup
+    @carrier = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
+  end
+
+  test "rate returned is not empty" do
+    response = @carrier.find_rates(
+      ActiveShipping::Location.new(:zip => 98104),
+      ActiveShipping::Location.new(:zip => 98126),
+      ActiveShipping::Package.new(16, [12, 6, 2], :units => :imperial)
+    )
+
+    assert response.success?, response.message
+    refute response.rates.empty?
+  end
 end
