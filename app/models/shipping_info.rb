@@ -36,6 +36,7 @@ class ShippingInfo
       orderitems = @params[:order][:orderitems]
 
       orderitems.each do |item|
+        item[:quantity] = item[:quantity].to_i
         if item[:quantity] > 1
         item[:quantity] -= 1
         a = item.clone
