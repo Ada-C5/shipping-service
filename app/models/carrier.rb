@@ -1,15 +1,12 @@
 class Carrier < ActiveRecord::Base
-  validates :name, presence: true
   validates :request, presence: true
   validates :response, presence: true
 
-  # logging?? 
-  def save_data
-    carrier          = Carrier.new 
-    carrier.name     = # who the request came from (hipsterly)
-    carrier.request  = # stuff from betsy
-    carrier.response = # shipping selection from betsy
-    carrier.save # save that nonsese 
-  end 
-
+  def self.create_by(request, response)
+    carrier = Carrier.new
+    carrier.request  = request.body.read
+    carrier.response = response.body
+    if carrier.save
+      return carrier 
+    end 
 end
