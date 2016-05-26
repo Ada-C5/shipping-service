@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525043839) do
+ActiveRecord::Schema.define(version: 20160526225559) do
 
   create_table "carriers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "name"
     t.string   "request"
     t.string   "response"
   end
