@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-  get '/quote' => 'quotes#index'
+  post '/quote' => 'quotes#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
