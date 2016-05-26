@@ -1,6 +1,7 @@
 require 'test_helper'
 
 
+
 module ShippingControllerTest
   class IndexAction < ActionController::TestCase
     setup do
@@ -59,24 +60,9 @@ module ShippingControllerTest
       assert_instance_of Array, @body
       assert_equal Array, @body.map(&:class).uniq.first
     end
+
+    # test "package, origin, destination instances of active_shipping objects" do  
+    #   assert_equal 4, @body.pa 
+    # end
   end
-
-
-
-  #   test "returns an array of pet objects" do
-
-  #     assert_instance_of Array, @body
-  #     assert_equal Hash, @body.map(&:class).uniq.first
-  #   end
-
-  #   test "returns three pet objects" do
-  #     assert_equal 5, @body.length
-  #   end
-
-  #   test "each pet object contains the relevant keys" do
-  #     keys = %w( age human id name )
-  #     assert_equal keys, @body.map(&:keys).flatten.uniq.sort
-  #   end
-  # end
-
 end
