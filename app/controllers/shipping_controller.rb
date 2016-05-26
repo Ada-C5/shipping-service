@@ -28,10 +28,10 @@ class ShippingController < ApplicationController
 
     #Returned sorted rates data:
     usps_results_array = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-    usps_results_array = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    ups_results_array = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
     #What we're sending back to betsy:
-    response = [usps_results_array, usps_results_array]
+    response = [usps_results_array, ups_results_array]
 
     #Save request/response to database:
     log_request_response(params, response)
