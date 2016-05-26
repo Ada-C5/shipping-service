@@ -11,13 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524230003) do
-
-  # put in betsy order_id so we can see what was quoted to us?
-  # So that we can find it
+ActiveRecord::Schema.define(version: 20160526213512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "logs", force: :cascade do |t|
+    t.string   "betsy_json_query"
+    t.string   "betsy_json_response"
+    t.string   "betsy_order_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
 
   create_table "shipping_tables", force: :cascade do |t|
     t.string   "carrier",                                   null: false

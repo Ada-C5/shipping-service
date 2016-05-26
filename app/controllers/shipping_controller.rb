@@ -6,11 +6,10 @@ class ShippingController < ApplicationController
   def quotes
     fedex = ShippingWrapper.fedex(params[:zipcode], params[:quantity])
     usps = ShippingWrapper.usps(params[:zipcode], params[:quantity])
+    order_id = params[:order_id]
     join = {fedex: fedex, usps: usps}
-    raise
-    # Log.create add new and saves it to the database
-    # fun = {zipcode: params[:zipcode], quantity: params[:quantity]} #this is for the view test
     render json: join
+    Log.create(betsy_json_query: (@_request), betsy_json_response: @_response, betsy_order_id: order_id)
   end
 end
  # Generate new model, called log.rb?  this would then be the database
