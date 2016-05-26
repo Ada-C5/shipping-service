@@ -5,10 +5,9 @@ class CarriersControllerTest < ActionController::TestCase
     @request.headers['Accept'] = Mime::JSON
     @request.headers['Content-Type'] = Mime::JSON.to_s
     @params = {
-      order: { city: "Seattle", state: "WA", country: "US", zip: "98112",
-      origin: { state: "WA", zip: '98112', city: "Seattle" },
+      order: { city: "Phoenix", state: "AZ", zip: "85026" }
+      origin: { city: "Seattle" state: "WA", zip: "98115" },
       orderitems: [{ height: 4, width: 6, length: 10, weight: 30}]
-      }
     }
   end 
 

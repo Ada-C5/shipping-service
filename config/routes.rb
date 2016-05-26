@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   
   resources :carriers, only: [:index] do 
     collection do 
-      post 'get_rates'
+      get 'get_rates'
+      post 'choose_rates'
     end 
   end 
   # The priority is based upon order of creation: first created -> highest priority.

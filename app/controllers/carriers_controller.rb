@@ -2,12 +2,9 @@ class CarriersController < ApplicationController
 skip_before_filter  :verify_authenticity_token
 
   def index
-
+    placeholder = {carrier: "UPS", carrier: "USPS"}
+    render json: [placeholder].as_json
   end
-
-  def show
-
-  end 
 
   def get_rates
     packages = []
@@ -35,7 +32,7 @@ skip_before_filter  :verify_authenticity_token
       width     = item[:width].to_i
       packing   = ActiveShipping::Package.new( weight * 16, units: :imperial)
       packages  << packing
-  end
+    end
 
     ups           = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
     ups_response  = ups.find_rates(origin, destination, packages)
@@ -49,3 +46,7 @@ skip_before_filter  :verify_authenticity_token
     render json: [ups_rates, usps_rates].as_json
   end
 
+  def choose_rates
+
+  end 
+end 
