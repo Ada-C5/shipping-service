@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -8,6 +11,8 @@ require 'vcr'
 require 'minitest-vcr'
 require 'webmock/minitest'
 require 'minitest/reporters'
+
+require 'active_shipping'
 
 VCR.configure do |c|
  c.cassette_library_dir = 'test/cassettes'

@@ -3,18 +3,24 @@ class ShippingsController < ApplicationController
   def shipping_rates
     # get the shipping rate from shipping.rb rate method
     # using the params(orgin, destination and package weight info)
-    orgins = params[:orgin]
-    destination = params[:destination]
-    order = params[:order]
+
+
+    response = JSON.parse(params[:_json])
+
+
+    origins = response["shipping"]["origins"]
+    destination = response["shipping"]["destination"]
+
+    # order = params[:shipping][:order]
 
 
     # send the response to method that will calculate rate
       # rates = shipping_rate_calculator(orgin, destination, weight)
-      shipping_rates_values = shipping_rates_calculator(orgin, desination, weight)
+      shipping_rates_values = Shipping.shipping_rates_calculator(origins, destination)
 
-      response = {shipping_rates_values: shipping_rates_values, order: order, }
+      response = {shipping_rates_values: shipping_rates_values}
     # create a log of incoming request from user
-      log = Log.create(request: params.to_s, response: shipping_rate.to_s)
+      # log = Log.create(request: params.to_s, response: shipping_rate.to_s)
 
       if shipping_rates_values
         render json: shipping_rates_values.as_json
