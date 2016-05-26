@@ -34,16 +34,22 @@ skip_before_filter  :verify_authenticity_token
       packages  << packing
     end
 
-    ups           = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
-    ups_response  = ups.find_rates(origin, destination, packages)
-    ups_rates     = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    ups             = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
+    ups_response    = ups.find_rates(origin, destination, packages)
+    ups_rates       = ups_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
 
-    usps          = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
-    usps_response = usps.find_rates(origin, destination, packages)
-    usps_rates    = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    usps            = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
+    usps_response   = usps.find_rates(origin, destination, packages)
+    usps_rates      = usps_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
-    render json: [ups_rates, usps_rates].as_json
+    fedex           = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_ACCESS_KEY"], account:ENV["FEDEX_ACCOUNT"], test: true )
+    fedex_response  = fedex.find_rates(origin, destination, packages)
+    fedex_rates     = fedex_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+
+
+
+    render json: [ups_rates, usps_rates, fedex_rates].as_json
   end
 
   def choose_rates
