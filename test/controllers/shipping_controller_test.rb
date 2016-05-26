@@ -11,41 +11,52 @@ module ShippingControllerTest
       @body = JSON.parse(response.body)
     end
 
-    test "index returns 200" do 
+    test "index returns 200" do
       get :index
-      assert_response :success 
+      assert_response :success
     end
   end
 
-  # class SearchAction < ActionController::TestCase
-  #   setup do
-  #     @request.headers['Accept'] = Mime::JSON
-  #     @request.headers['Content-Type'] = Mime::JSON.to_s
+  class SearchAction < ActionController::TestCase
+    setup do
+      @request.headers['Accept'] = Mime::JSON
+      @request.headers['Content-Type'] = Mime::JSON.to_s
 
-  #       @body = {
-  #         shipping_info: {
-  #           country: USA,
-  #           state: WA,
-  #           city: Seattle,
-  #           zip: 98115
-  #           },
-  #         package_info: {
-  #           weight: 2,
-  #           height: 15,
-  #           width: 15,
-  #           units: :imperial
-  #           }
-  #         }
+        @body = {
+          "origin_info": {
+            "country": "United States",
+            "state": "WA",
+            "city": "Seattle",
+            "zip": "98115"
+          },
+          "destination_info": {
+            "country": "United States",
+            "state": "CA",
+            "city": "Los Angeles",
+            "zip": "90039"
+          },
+          "package_info": {
+            "weight": "5",
+            "height": "15",
+            "width": "15",
+            "length": "15"
+          }
+        }
 
-  #     get :search
-  #     @body = JSON.parse(response.body)
-  #   end
+      get :search
+      @body = JSON.parse(response.body)
+    end
 
-  #   # test "index returns 200" do 
-  #   #   get :index
-  #   #   assert_response :success 
-  #   # end
-  # end
+    test "there are four things in origin_params" do
+      assert_equal 4, @body[origin_params].keys
+    end
+
+
+
+    # test "data being sent do API is JSON" do
+    #   assert_match 'application/json', response.header['Content-Type']
+    # end
+  end
 
 
 
