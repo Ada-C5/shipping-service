@@ -2,24 +2,24 @@ require 'test_helper'
 
 
 module QuotesControllerTest
-  class ShowAction < ActionController::TestCase
+  class IndexAction < ActionController::TestCase
     setup do
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
-      get :show, carrier: "USPS", shipping: {
-            address: { country: "US", state: "WA", city: "Seattle", zip: "98122" }
+      get :index, carrier: "USPS", shipping: {
+            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "98122" }
           }.to_json
 
       @body = JSON.parse(response.body)
     end
 
-    test "can get #show" do
+    test "can get #index" do
       assert_response :success
     end
 
     test "it should return a Hash object" do
-      assert_instance_of Hash, @body
+      assert_instance_of Array, @body
     end
   end
 
@@ -28,7 +28,7 @@ module QuotesControllerTest
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
-      get :show, carrier: "USPS", shipping: {
+      get :index, carrier: "USPS", shipping: {
             carrier: "USPS",
             address: { country: "", state: "", city: "", zip: "98001" }
           }.to_json

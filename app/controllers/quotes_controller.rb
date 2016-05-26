@@ -1,12 +1,12 @@
 class QuotesController < ApplicationController
 
-  def index
+  def show
     quotes = []
 
     render json: quotes
   end
 
-  def show
+  def index
     request = params["shipping"]
     #
       # "shipping": {
