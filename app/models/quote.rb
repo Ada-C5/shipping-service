@@ -5,6 +5,9 @@ class Quote < ActiveRecord::Base
     origin = Quote.get_origin
 
     address = parsed_request["address"]
+    # check_country(address)
+    # check_zip(address)
+
     destination = Quote.get_destination(address) #change to address when not testing
     packages = Quote.get_packages
 
@@ -34,7 +37,7 @@ class Quote < ActiveRecord::Base
       quote.status = 400
       quote.save
       quote
-      
+
     end
   end
 
@@ -49,5 +52,21 @@ class Quote < ActiveRecord::Base
   def self.get_packages
     ActiveShipping::Package.new(7, [15, 10, 4.5], units: :imperial)
   end
+
+  private
+
+  def check_country(address)
+    if address["country"].nil? || address["country"].empty?
+      #error
+    elsif address["country"].length != 2 && address["country"].length != 3
+      #error
+    elsif address["country"][/[a-zA-Z]+/] != address["country"]
+      #error
+    end
+  end
+
+  def check_zip(address)
+  end
+
 
 end
