@@ -11,26 +11,24 @@ class Carrier
   def self.estimate_usps_shipping(items, state, city, zip)
 
     packages = ActiveShipping::Package.new(items.to_i * 14, [93, 10], cylinder: false)
-    ORIGIN
-    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
+    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip.to_s)
 
     usps = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
     response = usps.find_rates(ORIGIN, destination, packages)
 
-    usps_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
     # self.new
   end
 
   def self.estimate_ups_shipping(items, state, city, zip)
     packages = ActiveShipping::Package.new(items.to_i * 14, [93, 10], cylinder: false)
-    ORIGIN
-    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip)
+    destination = ActiveShipping::Location.new(country: 'US', state: state, city: city, zip: zip.to_s)
 
     ups = ActiveShipping::UPS.new(login: ENV['UPS_LOGIN'], password: ENV['UPS_PASSWORD'], key: ENV['UPS_KEY'])
 
     response = ups.find_rates(ORIGIN, destination, packages)
 
-    ups_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
 
   end
 
