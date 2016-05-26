@@ -33,7 +33,7 @@ class Quote < ActiveRecord::Base
 
       quote = self.new
       quote.request = request
-      quote.response = "Error"
+      quote.response = { "Error": "Some error" }.to_json
       quote.status = 400
       quote.save
       quote

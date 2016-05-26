@@ -7,8 +7,8 @@ module QuotesControllerTest
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
-      get :show, carrier: "FedEx", shipping: {
-            carrier: "FedEx",
+      get :show, carrier: "USPS", shipping: {
+            carrier: "USPS",
             address: { country: "US", state: "WA", city: "Seattle", zip: "98122" }
           }.to_json
 
@@ -59,7 +59,7 @@ module QuotesControllerTest
     end
 
     test "will raise an error if one of the values in address hash is empty" do
-
+      skip
     end
 
   end
