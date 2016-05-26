@@ -1,5 +1,6 @@
   require 'active_shipping'
 
+<<<<<<< HEAD
   # returns shipping rates and determines the size of a package given weight
   # uses active shipping to calculate and return rates
   class Shipping
@@ -7,8 +8,18 @@
     SMALL = [5, 5, 5]
     MEDIUM = [10, 10, 10]
     LARGE = [20, 20, 20]
+=======
+before_filter :indicate_source
+
+def indicate_source
+  @api = true
+end
+
+class Shipping
+>>>>>>> d6a816ae8daea91dff4748611ef233fdc57bc5ef
 
 
+<<<<<<< HEAD
     # UPS_LOGIN = "rishallen_5"
     # UPS_PASSWORD = "29E8Y5"
     # UPS_KEY = "9D0CA9FE6A4849E8"
@@ -77,3 +88,30 @@
     end
 
   end
+=======
+end
+
+def shipping_rates
+  # get the shipping rate from shipping.rb rate method
+  # using the params(orgin, destination and package weight info)
+  orgins = params[:orgin]
+  destination = params[:destination]
+  order = params[:order]
+
+
+  # send the response to method that will calculate rate
+    # rates = shipping_rate_calculator(orgin, destination, weight)
+    shipping_rates_values = shipping_rates_calculator(orgin, desination, weight)
+
+    response = {shipping_rates_values: shipping_rates_values, order: order, }
+  # create a log of incoming request from user
+    log = Log.create(request: params.to_s, response: shipping_rate.to_s)
+
+    if shipping_rates_values
+      render json: shipping_rates_values.as_json
+    else
+      render json: [], status: :no_content
+    end
+end
+end
+>>>>>>> d6a816ae8daea91dff4748611ef233fdc57bc5ef

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+<<<<<<< HEAD
 # namespace :api do
   resources :shippings do
     collection do
@@ -9,6 +10,9 @@ Rails.application.routes.draw do
 
 
 
+=======
+  resources :shippings, only: [:index]
+>>>>>>> d6a816ae8daea91dff4748611ef233fdc57bc5ef
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
