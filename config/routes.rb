@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/v1/carriers/' => 'carriers#calculate'
-  post '/v1/carriers/' => 'carriers#selected'
+  post '/v1/carriers/selected' => 'carriers#selected'
   get '/v1/tracking' => 'carriers#tracking'
 
   # The priority is based upon order of creation: first created -> highest priority.
