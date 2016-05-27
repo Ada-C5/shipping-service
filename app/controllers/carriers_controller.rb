@@ -16,11 +16,11 @@ skip_before_filter  :verify_authenticity_token
    
    Carrier.create.by(request, response)
    
-   if response.status.to_i.between?(200,299)
+   # if response.status.to_i.between?(200,299)
      render json: response.as_json, status: response.status
-   else
-     render json: [], message: ":( An Error Has Occured, Please Try Again Later :(", status: response.status
-   end
+   # else
+   #   render json: [], message: ":( An Error Has Occured, Please Try Again Later :(", status: response.status
+   # end
  end
 
  private
@@ -29,12 +29,12 @@ skip_before_filter  :verify_authenticity_token
    packages = []
 
    destination_country = "US" 
-   destination_state   = params[:order][:state]
+   destination_state   = params[:order][:state].capitalize
    destination_city    = params[:order][:city]
    destination_zip     = params[:order][:zip]
 
    origin_country      = "US"
-   origin_state        = params[:origin][:state]
+   origin_state        = params[:origin][:state].capitalize 
    origin_city         = params[:origin][:city]
    origin_zip          = params[:origin][:zip]
 
