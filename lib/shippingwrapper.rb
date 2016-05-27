@@ -6,11 +6,11 @@ class ShippingWrapper
     if fedex.present? && ups.present?
       @fedex = fedex
       @ups = ups
-
+      @response = "Successful Request"
      else
-      @response = "Invalid Address"
       @fedex = fedex
       @ups = ups
+      @response = "Invalid Address"
     end
   end
 
@@ -19,11 +19,12 @@ class ShippingWrapper
     ups_info = ActiveShipping::UPS.new(login: ENV['UPS_LOGIN'], password: ENV['UPS_PASSWORD'], key: ENV['UPS_KEY'])
     fedex_info = ActiveShipping::FedEx.new(login: ENV['FEDEX_LOGIN'], password: ENV['FEDEX_PASSWORD'], key: ENV['FEDEX_KEY'], account: ENV['FEDEX_ACCOUNT'], test: ENV['FEDEX_TEST'])
 
+    # binding.pry
     origin = ActiveShipping::Location.new(origin)
     destination = ActiveShipping::Location.new(destination)
 
     packages = packages.map do |product|
-      ActiveShipping::Package.new(product[:weight_lbs] * 16, [product[:length_in], product[:height_in], product[:width_in]],units: product[:units])
+      ActiveShipping::Package.new(product[:weight_lbs].to_i * 16, [product[:length_in].to_i, product[:height_in].to_i, product[:width_in].to_i], units: product[:units].to_i)
     end
 
     begin
