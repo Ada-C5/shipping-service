@@ -1,6 +1,6 @@
 require 'active_shipping'
 
-class Carrier
+class Carrier < ActiveRecord::Base
 
   ORIGIN = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
 

@@ -1,4 +1,6 @@
 class CarriersController < ApplicationController
+  after_action :log
+
   def calculate
     zip = params[:zip]
     city = params[:city]
@@ -23,13 +25,17 @@ class CarriersController < ApplicationController
     price = params[:carrier_price]
     number = rand(99999) + price.to_i
     tracking = {"#{carrier}" => "#{number}"}
-    # log = "#{price}, #{carrier}, #{tracking}"
-    # log = Carrier.new(request: log)
-    # if log.save
-    #   @message = "saved!"
-    # else
-    #   @message = "Save, dammit"
-    # end
     render json: tracking.as_json, :status => :ok
   end
+
+  def log
+    @response = response.body
+    @request = {
+    zip: params[:zip],
+    city: params[:city],
+    state: params[:state],
+    items: params[:items]}
+    Carrier.create(response: @response, request: @request)
+  end
+
 end
