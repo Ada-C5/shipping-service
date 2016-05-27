@@ -11,10 +11,9 @@ class Shipping
   end
 
   def self.create_by_params(params)
-
-
     # getting the actual JSON we want from that big ugly params hash
     package_info = params[:request] # this is a string
+    # binding.pry
     params = JSON.parse(package_info)
 
     # change zip code to integer because of numeric data error... is this actually needed?
