@@ -7,7 +7,8 @@ module QuotesControllerTest
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
       get :index, { "shipping" => {
-            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "98122" }
+            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "98122" },
+            "number_of_items" => "1"
           }.to_json }
 
       @body = JSON.parse(response.body)

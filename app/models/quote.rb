@@ -5,7 +5,7 @@ class Quote < ActiveRecord::Base
     @quote = self.new
     @quote.request = request
     @origin = Quote.get_origin
-    @packages = Quote.get_packages
+    @packages = Quote.get_packages(parsed_request["number_of_items"])
     address = parsed_request["address"]
 
     if self.check_zip(address).nil?
@@ -49,8 +49,14 @@ class Quote < ActiveRecord::Base
     end
   end
 
-  def self.get_packages
-    ActiveShipping::Package.new(7, [15, 10, 4.5], units: :imperial)
+  def self.get_packages(number_of_items)
+    number_of_items = number_of_items.to_i
+    number_of_packages = (number_of_items / 4.0).ceil
+    packages = []
+    number_of_packages.times do
+      packages << ActiveShipping::Package.new(7, [15, 10, 4.5], units: :imperial)
+    end
+    packages
   end
 
   private
