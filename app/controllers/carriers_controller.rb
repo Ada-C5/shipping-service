@@ -5,14 +5,14 @@ skip_before_filter  :verify_authenticity_token
    ups         = ActiveShipping::UPS.new(login: ENV["UPS_LOGIN"], password: ENV["UPS_PASSWORD"], key: ENV['UPS_ACCESS_KEY'])
    ups_rates   = get_rates(ups)
 
-   usps        = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'], test_mode: true)
-   usps_rates  = get_rates(usps)
+   # usps        = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'], test_mode: true)
+   # usps_rates  = get_rates(usps)
 
    fedex       = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_ACCESS_KEY"], account:ENV["FEDEX_ACCOUNT"], test: true )
    fedex_rates = get_rates(fedex)
 
-   request     = [ups, usps].as_json 
-   response    = [ups_rates, usps_rates].as_json
+   request     = [ups, fedex].as_json 
+   response    = [ups_rates, fedex_rates].as_json
 
    Carrier.create.by(request, response)
    
