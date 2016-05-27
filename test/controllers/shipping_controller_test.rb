@@ -32,6 +32,10 @@ module ShippingControllerTest
       assert_instance_of Hash, @body
     end
 
+    test "returns hash of 2 quotes" do
+      assert_equal 2, @body.count
+    end
+
     # test "has the right keys" do
     #   assert_equal @keys, @body.keys.sort
     # end
