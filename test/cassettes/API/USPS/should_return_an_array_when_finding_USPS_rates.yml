@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=%3C?xml%20version=%221.0%22?%3E%0A%3CRateV4Request%20USERID=%22801ADADE3686%22%3E%0A%20%20%3CPackage%20ID=%220%22%3E%0A%20%20%20%20%3CService%3EALL%3C/Service%3E%0A%20%20%20%20%3CFirstClassMailType/%3E%0A%20%20%20%20%3CZipOrigination%3E90210%3C/ZipOrigination%3E%0A%20%20%20%20%3CZipDestination%3E72201%3C/ZipDestination%3E%0A%20%20%20%20%3CPounds%3E0%3C/Pounds%3E%0A%20%20%20%20%3COunces%3E3.5%3C/Ounces%3E%0A%20%20%20%20%3CContainer%3ENONRECTANGULAR%3C/Container%3E%0A%20%20%20%20%3CSize%3ELARGE%3C/Size%3E%0A%20%20%20%20%3CWidth%3E3.94%3C/Width%3E%0A%20%20%20%20%3CLength%3E36.61%3C/Length%3E%0A%20%20%20%20%3CHeight%3E3.94%3C/Height%3E%0A%20%20%20%20%3CGirth%3E12.37%3C/Girth%3E%0A%20%20%20%20%3CMachinable%3EFALSE%3C/Machinable%3E%0A%20%20%3C/Package%3E%0A%20%20%3CPackage%20ID=%221%22%3E%0A%20%20%20%20%3CService%3EALL%3C/Service%3E%0A%20%20%20%20%3CFirstClassMailType/%3E%0A%20%20%20%20%3CZipOrigination%3E90210%3C/ZipOrigination%3E%0A%20%20%20%20%3CZipDestination%3E72201%3C/ZipDestination%3E%0A%20%20%20%20%3CPounds%3E0%3C/Pounds%3E%0A%20%20%20%20%3COunces%3E120.0%3C/Ounces%3E%0A%20%20%20%20%3CContainer%3ERECTANGULAR%3C/Container%3E%0A%20%20%20%20%3CSize%3ELARGE%3C/Size%3E%0A%20%20%20%20%3CWidth%3E10.00%3C/Width%3E%0A%20%20%20%20%3CLength%3E15.00%3C/Length%3E%0A%20%20%20%20%3CHeight%3E4.50%3C/Height%3E%0A%20%20%20%20%3CGirth%3E29.00%3C/Girth%3E%0A%20%20%20%20%3CMachinable%3ETRUE%3C/Machinable%3E%0A%20%20%3C/Package%3E%0A%3C/RateV4Request%3E%0A
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Backside-Transport:
+      - OK OK
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml
+      Server:
+      - Microsoft-IIS/7.5
+      X-Aspnet-Version:
+      - 2.0.50727
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Fri, 27 May 2016 22:22:08 GMT
+      X-Client-Ip:
+      - 56.0.70.6
+      X-Global-Transaction-Id:
+      - '1301594749'
+      Access-Control-Allow-Origin:
+      - "*"
+      Connection:
+      - Keep-Alive
+      Cteonnt-Length:
+      - '2216'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Content-Length:
+      - '491'
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <RateV4Response><Package ID="0"><ZipOrigination>90210</ZipOrigination><ZipDestination>72201</ZipDestination><Pounds>0</Pounds><Ounces>3.5</Ounces><Size>LARGE</Size><Machinable>FALSE</Machinable><Zone>7</Zone><Postage CLASSID="3"><MailService>Priority Mail Express 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>29.25</Rate></Postage><Postage CLASSID="2"><MailService>Priority Mail Express 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt; Hold For Pickup</MailService><Rate>29.25</Rate></Postage><Postage CLASSID="1"><MailService>Priority Mail 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>7.30</Rate></Postage><Postage CLASSID="0"><MailService>First-Class Mail&amp;lt;sup&amp;gt;&amp;#174;&amp;lt;/sup&amp;gt; Parcel</MailService><Rate>2.64</Rate></Postage><Postage CLASSID="4"><MailService>USPS Retail Ground&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>7.29</Rate></Postage><Postage CLASSID="6"><MailService>Media Mail Parcel</MailService><Rate>2.61</Rate></Postage><Postage CLASSID="7"><MailService>Library Mail Parcel</MailService><Rate>2.48</Rate></Postage></Package><Package ID="1"><ZipOrigination>90210</ZipOrigination><ZipDestination>72201</ZipDestination><Pounds>0</Pounds><Ounces>120.0</Ounces><Size>LARGE</Size><Machinable>TRUE</Machinable><Zone>7</Zone><Postage CLASSID="3"><MailService>Priority Mail Express 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>73.05</Rate></Postage><Postage CLASSID="2"><MailService>Priority Mail Express 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt; Hold For Pickup</MailService><Rate>73.05</Rate></Postage><Postage CLASSID="1"><MailService>Priority Mail 2-Day&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>27.80</Rate></Postage><Postage CLASSID="4"><MailService>USPS Retail Ground&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;</MailService><Rate>23.93</Rate></Postage><Postage CLASSID="6"><MailService>Media Mail Parcel</MailService><Rate>5.97</Rate></Postage><Postage CLASSID="7"><MailService>Library Mail Parcel</MailService><Rate>5.70</Rate></Postage></Package></RateV4Response>
+    http_version: 
+  recorded_at: Fri, 27 May 2016 22:22:09 GMT
+recorded_with: VCR 3.0.3
