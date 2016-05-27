@@ -9,15 +9,6 @@ class QuotesController < ApplicationController
 
     Log.create_from_request_and_response(params, rates)
 
-    # log_entry = Log.new(params, rates)
-    # binding.pry
-    # if log_entry.save
-    #   puts "YAY you added to the log"
-    # else
-    #   puts "NO it didn't save"
-    # end
-    # adds this response to the log??
-    # HTTParty.post(log_path, body: rates.to_json)
     render json: rates.to_json
   end
 end
