@@ -16,23 +16,19 @@ class ShippingsController < ApplicationController
 
     if total_result.fedex.nil?
       #creates a new log of the BAD requests
-      new_entry = Log.new
-      new_entry.received = params.as_json
-      new_entry.response = total_result.as_json
-      new_entry.save
-
+      log(params,total_result)
       render json: total_result.as_json(except: [:fedex, :ups]), status: :no_content
     else
       #creates a new log of the successful requests
-      new_entry = Log.new
-      new_entry.received = params.as_json
-      new_entry.response = total_result.as_json
-      new_entry.save
-
+      log(params, total_result)
       render json: total_result.as_json, status: :ok
     end
-
-
   end
 
+  def log(params, total_result)
+    new_entry = Log.new
+    new_entry.received = params.as_json
+    new_entry.response = total_result.as_json
+    new_entry.save
+  end
 end
