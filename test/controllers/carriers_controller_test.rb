@@ -8,7 +8,7 @@ require 'test_helper'
       # this could be important
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
-      get :calculate
+      get :calculate, params: {zip: "98104"}
     end
 
     test "can get #calculate" do
