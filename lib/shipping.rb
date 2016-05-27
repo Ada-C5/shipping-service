@@ -7,7 +7,7 @@ module ShippingWrapper #< ActiveRecord::Base
     fedex = ActiveShipping::FedEx.new(login: ENV["FEDEX_LOGIN"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_KEY"], account: ENV["FEDEX_ACCOUNT"], test: true)
     origin = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98103')
     destination = ActiveShipping::Location.new(country: 'US', state: location[:state_code], city: location[:city], zip: zipcode)
-    packages = ActiveShipping::Package.new(quantity.to_i * 4, [15, 10, 4.5], units: :imperial)
+    packages = ActiveShipping::Package.new(quantity.to_i * rand(1...16), [15, 10, 4.5], units: :imperial)
 
     response = fedex.find_rates(origin, destination, packages)
 
