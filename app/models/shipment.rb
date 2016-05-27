@@ -44,7 +44,7 @@ class Shipment < ActiveRecord::Base
 
     destination = ActiveShipping::Location.new({country: 'US'}.merge(customer_info))
 
-    fedex = ActiveShipping::FedEx.new(login: ENV["TEST_METER_NUMBER"], password: ENV["TEST_PASSWORD"], key: ENV["DEVELOPER_TEST_KEY"], account: ENV["TEST_ACCOUNT_NUMBER"], test: true)
+    fedex = ActiveShipping::FedEx.new(login: ENV["TEST_METER_NUMBER"], password: ENV["TEST_PASSWORD"], key: ENV["DEVELOPER_TEST_KEY"], account: ENV["TEST_ACCOUNT_NUMBER"], :test => true)
     response = fedex.find_rates(origin, destination, packages)
 
     @fedex_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price, rate.delivery_date]}
