@@ -2,6 +2,7 @@
 *.gem
 *.rbc
 /coverage/
+/.config
 /InstalledFiles
 /pkg/
 /spec/reports/
@@ -54,8 +55,8 @@ rerun.txt
 pickle-email-*.html
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
-config/initializers/secret_token.rb
-config/secrets.yml
+# config/initializers/secret_token.rb
+# config/secrets.yml
 
 ## Environment normalization:
 /.bundle
