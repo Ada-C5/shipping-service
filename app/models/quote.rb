@@ -42,7 +42,6 @@ class Quote < ActiveRecord::Base
 
   def self.get_destination(address)
     begin
-      address["zip"] = address["zip"].to_s
       ActiveShipping::Location.new(country: address["country"], state: address["state"], city: address["city"], zip: address["zip"])
     rescue
       self.throw_422_error
@@ -72,6 +71,7 @@ class Quote < ActiveRecord::Base
   end
 
   def self.check_zip(address)
+    address["zip"] = address["zip"].to_s
     if address["zip"].nil? || address["zip"].empty?
       self.throw_422_error
       return nil
