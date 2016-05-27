@@ -1,9 +1,0 @@
-butts:
-  request: some string from httparty in betsy
-  response: another post string with a carrier selected 
-also_butts:
-  request: a string from httparty in betsy
-  response: yet another post string with a carrier selected 
-more_butts:
-  request: another string from httparty in betsy
-  response: some other post string with a carrier selected
