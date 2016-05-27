@@ -6,7 +6,7 @@ class ShipmentsController < ApplicationController
   #
   end
 
-  def get_rates(data)
+  def get_rates
     data = JSON.parse(params[:_json])
     package = data[:package]
     user = data[:origin]
