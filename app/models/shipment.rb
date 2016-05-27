@@ -1,5 +1,5 @@
 require 'active_shipping'
-require 'test_helper'
+
 
 class Shipment < ActiveRecord::Base
 
