@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+
+  one:
+    betsy_json_query: "JSON string"
+    betsy_json_response: "Another JSON string"
+    betsy_order_id: "13"
+
+  two:
+    betsy_json_query: "Random strings"
+    betsy_json_response: "Strings everywhere"
+    betsy_order_id: "2"
+
+  three:
+    betsy_json_query: "Testing is fun"
+    betsy_json_response: "We're trying to convince ourselves"
+    betsy_order_id: "7"
