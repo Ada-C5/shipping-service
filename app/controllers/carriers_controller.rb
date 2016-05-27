@@ -4,18 +4,20 @@ class CarriersController < ApplicationController
     city = params[:city]
     state = params[:state]
     items = params[:items]
-    estimate = {
-      "usps" => Carrier.estimate_usps_shipping(items, state, city, zip),
-      "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)
-    }
-    # log = "#{city}, #{state}, #{zip}, #{items}, #{estimate}"
-    # log = Carrier.new(request: log)
-    # if log.save
-    #   @message = "saved!"
-    # else
-    #   @message = "Save, dammit"
-    # end
-    render json: estimate.as_json, :status => :ok
+    begin 
+        usps = Carrier.estimate_usps_shipping(items, state, city, zip)
+        usps_code = usps.response.code
+        ups = Carrier.estimate_ups_shipping(items, state, city, zip)
+        ups_code = ups.response.code
+        estimate = {
+          "usps" => usps,
+          "ups" => ups
+        }
+        render json: estimate.as_json, :status => :ok
+    rescue ActiveShipping::ResponseError
+        render json: [], :status => :bad_request
+    end
+
   end
 
   def selected

@@ -16,9 +16,9 @@ require 'test_helper'
       assert_response :success
     end
 
-    # test "#calculate returns json" do
-    #   assert_match 'application/json', response.header['Content-Type']
-    # end
+    test "#calculate returns json" do
+      assert_match 'application/json', response.header['Content-Type']
+    end
   end
 
   # class SelectedAction < ActionController::TestCase
