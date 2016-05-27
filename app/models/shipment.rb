@@ -37,17 +37,19 @@ class Shipment < ActiveRecord::Base
     #   Fri, 27 May 2016 00:00:00 +0000]]
   end
 
-  def self.fedex_rates(product_info, user_info, customer_info)
+  def self.usps_rates(product_info, user_info, customer_info)
     packages = ActiveShipping::Package.new(product_info[:weight],[product_info[:height],product_info[:width],product_info[:length]])
 
     origin = ActiveShipping::Location.new({country: 'US'}.merge(user_info))
 
     destination = ActiveShipping::Location.new({country: 'US'}.merge(customer_info))
 
-    fedex = ActiveShipping::FedEx.new(login: ENV["TEST_METER_NUMBER"], password: ENV["TEST_PASSWORD"], key: ENV["DEVELOPER_TEST_KEY"], account: ENV["TEST_ACCOUNT_NUMBER"])
-    response = fedex.find_rates(origin, destination, packages)
-    @fedex_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price, rate.delivery_date]}
-    return @fedex_rates
+    usps = ActiveShipping::USPS.new(username: ENV["USERNAME_USPS"])
+
+    response = usps.find_rates(origin, destination, packages)
+
+    @usps_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price, rate.delivery_date]}
+    return @usps_rates
   end
 
 
