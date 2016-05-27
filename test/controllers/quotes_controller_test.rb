@@ -7,9 +7,9 @@ module QuotesControllerTest
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
 
-      get :index, carrier: "USPS", shipping: {
+      get :index, { "shipping" => {
             "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "98122" }
-          }.to_json
+          }.to_json }
 
       @body = JSON.parse(response.body)
     end
@@ -19,7 +19,7 @@ module QuotesControllerTest
     end
 
     test "it should return a Hash object" do
-      assert_instance_of Array, @body
+      assert_instance_of Hash, @body
     end
   end
 

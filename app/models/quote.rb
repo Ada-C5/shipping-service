@@ -8,10 +8,10 @@ class Quote < ActiveRecord::Base
     @destination = Quote.get_destination(address) #change to address when not testing
     begin
       carrier_responses = {
-         "fedex" => self.fedex_rates,
-         "usps" => self.usps_rates
+         "FedEx" => self.fedex_rates,
+         "USPS" => self.usps_rates
       }
-      
+
       quote = self.new
       quote.request = request
       quote.response = carrier_responses.to_json
