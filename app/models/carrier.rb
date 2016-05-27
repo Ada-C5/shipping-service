@@ -15,12 +15,8 @@ class Carrier
     response = usps.find_rates(ORIGIN, destination, packages)
 
     usps_response = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-    
-    if usps_response.nil?
-      return "Didn't work"
-    else
-      return usps_response
-    end
+
+
   end
 
   def self.estimate_ups_shipping(items, state, city, zip)
@@ -32,39 +28,6 @@ class Carrier
     response = ups.find_rates(ORIGIN, destination, packages)
 
     ups_response = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-    
-     if ups_response.nil?
-      return "Didn't work"
-    else
-      return ups_response
-    end
+
   end
-
-  # def self.get_code
-  #   begin
-  #   estimate = {
-  #     "usps" => Carrier.estimate_usps_shipping(items, state, city, zip),
-  #     "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)
-
-  #   }
-
-  #     new_estimate = self.new
-  #     new_estimate.request = items, state, city, zip
-  #     new_estimate.response = estimate.to_json
-  #     new_estimate.status = 200
-  #     new_estimate.save
-  #     new_estimate
-
-  #   rescue
-
-  #     new_estimate = self.new
-  #     new_estimate.request = items, state, city, zip
-  #     new_estimate.response = { "Error": "Something went wrong" }.to_json
-  #     new_estimate.status = 400
-  #     new_estimate.save
-  #     new_estimate
-  #   end
-    
-  # end
-
 end

@@ -4,11 +4,9 @@ class CarriersController < ApplicationController
     city = params[:city]
     state = params[:state]
     items = params[:items]
-    begin 
+    begin
         usps = Carrier.estimate_usps_shipping(items, state, city, zip)
-        usps_code = usps.response.code
         ups = Carrier.estimate_ups_shipping(items, state, city, zip)
-        ups_code = ups.response.code
         estimate = {
           "usps" => usps,
           "ups" => ups
