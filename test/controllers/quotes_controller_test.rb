@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 module QuotesControllerTest
   class IndexAction < ActionController::TestCase
     setup do
@@ -27,6 +26,7 @@ module QuotesControllerTest
     setup do
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
+      # Format for response body and address:
       #body: { shipping: {"address" => address}.to_json }).parsed_response
       #address = { country: @order.country, state:  @order.state, city:  @order.city, zip:  @order.zip }
       get :index, { "shipping" => {
@@ -41,6 +41,11 @@ module QuotesControllerTest
 
       @body_letter_zip = JSON.parse(response.body)
 
+      get :index, { "shipping" => {
+            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "" }
+          }.to_json }
+
+      @body_empty_zip = JSON.parse(response.body)
     end
 
     test "will respond 422 when country in address hash is empty" do
@@ -49,6 +54,10 @@ module QuotesControllerTest
 
     test "body will be empty if request has address with bad zip" do
       assert_equal @body_letter_zip, []
+    end
+
+    test "body willbe empty if request has address with empty zip" do
+      assert_equal @body_empty_zip, []
     end
   end
 
@@ -68,8 +77,4 @@ module QuotesControllerTest
       assert_response 400
     end
   end
-
-
-
-
 end

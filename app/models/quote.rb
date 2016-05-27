@@ -29,14 +29,12 @@ class Quote < ActiveRecord::Base
       @quote
 
     rescue
-      @quote.response = { "Error": "Some error" }.to_json
+      @quote.response = { "Error": "Bad Request" }.to_json
       @quote.status = 400
       @quote.save
       @quote
     end
-
   end
-
 
   def self.get_origin
     ActiveShipping::Location.new(country: "US", state: "WA", city: "Seattle", zip: "98121")
@@ -71,7 +69,6 @@ class Quote < ActiveRecord::Base
     usps = ActiveShipping::USPS.new(login: ENV["USPS_USERNAME"], password: ENV["USPS_PASSWORD"])
     Quote.get_rates_from_carrier(usps)
   end
-
 
   def self.check_zip(address)
     if address["zip"].nil? || address["zip"].empty?
