@@ -17,5 +17,6 @@ class ShippingController < ApplicationController
       Log.create(betsy_json_query: (@_request), betsy_json_response: @_response, betsy_order_id: order_id)
     else
       render json: [], status: :no_content
+    end
   end
 end
