@@ -4,8 +4,7 @@ Rails.application.routes.draw do
 
   # resources :quotes, only: [:show, :index]
   get '/quotes'           => 'quotes#index'
-  get '/quotes/:carrier'  => 'quotes#show', as: :quote
-  post '/quotes/:carrier' => 'quotes#selection', as: :selection
+
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

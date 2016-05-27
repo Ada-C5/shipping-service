@@ -46,9 +46,7 @@ class Quote < ActiveRecord::Base
     begin
       ActiveShipping::Location.new(country: address["country"], state: address["state"], city: address["city"], zip: address["zip"])
     rescue
-      @quote.response = { "Error": "Invalid destination address" }.to_json
-      @quote.status = 422
-      @quote.save
+      self.throw_422_error
       return nil
     end
   end
@@ -74,15 +72,6 @@ class Quote < ActiveRecord::Base
     Quote.get_rates_from_carrier(usps)
   end
 
-  def check_country(address)
-    if address["country"].nil? || address["country"].empty?
-      #error
-    elsif address["country"].length != 2 && address["country"].length != 3
-      #error
-    elsif address["country"][/[a-zA-Z]+/] != address["country"]
-      #error
-    end
-  end
 
   def self.check_zip(address)
     if address["zip"].nil? || address["zip"].empty?

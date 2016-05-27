@@ -1,11 +1,5 @@
 class QuotesController < ApplicationController
 
-  def show
-    quotes = []
-
-    render json: quotes
-  end
-
   def index
     request = params["shipping"]
     # binding.pry

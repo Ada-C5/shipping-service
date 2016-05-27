@@ -50,7 +50,23 @@ module QuotesControllerTest
     test "body will be empty if request has address with bad zip" do
       assert_equal @body_letter_zip, []
     end
+  end
 
+  class BadResponse < ActionController::TestCase
+    setup do
+      @request.headers['Accept'] = Mime::JSON
+      @request.headers['Content-Type'] = Mime::JSON.to_s
+
+      get :index, { "shipping" => {
+            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "11111" }
+          }.to_json }
+
+      @body = JSON.parse(response.body)
+    end
+
+    test "it should respond with 400 code when address is invalid" do
+      assert_response 400
+    end
   end
 
 
