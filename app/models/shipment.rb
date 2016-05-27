@@ -44,7 +44,7 @@ class Shipment < ActiveRecord::Base
 
     destination = ActiveShipping::Location.new({country: 'US'}.merge(customer_info))
 
-    usps = ActiveShipping::USPS.new(login: ENV["PASSWORD_USPS"])
+    usps = ActiveShipping::USPS.new(login: ENV["USERNAME_USPS"])
     response = usps.find_rates(origin, destination, packages)
 
     @usps_rates = response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
