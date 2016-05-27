@@ -8,9 +8,9 @@ class ShipmentsController < ApplicationController
 
   def get_rates
     #data = JSON.parse(params[:_json])
-    package = params[:package].with_indifferent_access
-    user = params[:origin].with_indifferent_access
-    customer = params[:destination].with_indifferent_access
+    package = {:weight => params[:package]["weight"], :height => params[:package]["height"], :length => params[:package]["length"], :width => params[:package]["width"]}
+    user = {:country => params[:package]["country"], :state => params[:package]["state"], :city => params[:package]["city"], :zip => params[:package]["zip"]}
+    customer = {:country => params[:package]["country"], :state => params[:package]["state"], :city => params[:package]["city"], :zip => params[:package]["zip"]}
 
     #this method returns an array of arrays for ups and array of arrays for fedex
     @ups_rates = Shipment.ups_rates(package, user, customer)
