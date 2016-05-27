@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  get '/' => 'shipping#index'
+  root to 'shipping#quotes'
   get '/quotes' => 'shipping#quotes'
 end
