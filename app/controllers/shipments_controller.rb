@@ -24,7 +24,8 @@ class ShipmentsController < ApplicationController
     # {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
 
     #return @fedex_rates, @ups_rates
-    return @ups_rates
+    render json: @ups_rates.to_json
+
   end
 
 end
