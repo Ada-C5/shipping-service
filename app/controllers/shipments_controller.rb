@@ -18,12 +18,12 @@ class ShipmentsController < ApplicationController
     # {country: 'US', city: 'Overland Park', state: 'KS', zip: '66212'},
     # {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
 
-    @usps_rates = Shipment.usps_rates(package, user, customer)
+    @fedex_rates = Shipment.fedex_rates(package, user, customer)
     # {weight: 10, height: 20, length: 30, width: 40},
     # {country: 'US', city: 'Overland Park', state: 'KS', zip: '66212'},
     # {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
 
-    return @usps_rates, @ups_rates
+    return @fedex_rates, @ups_rates
   end
 
 end
