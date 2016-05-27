@@ -3,10 +3,11 @@ class CarriersController < ApplicationController
     zip = params[:zip]
     city = params[:city]
     state = params[:state]
-    items = params[:items] # TO_i??
+    items = params[:items]
     estimate = {
       "usps" => Carrier.estimate_usps_shipping(items, state, city, zip),
-      "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)}
+      "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)
+    }
     # log = "#{city}, #{state}, #{zip}, #{items}, #{estimate}"
     # log = Carrier.new(request: log)
     # if log.save

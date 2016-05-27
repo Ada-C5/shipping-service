@@ -2,10 +2,6 @@ require 'active_shipping'
 
 class Carrier
 
-  # def initialize
-
-  # end
-
   ORIGIN = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
 
   def self.estimate_usps_shipping(items, state, city, zip)
