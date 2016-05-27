@@ -5,17 +5,15 @@ class ShippingsController < ApplicationController
     # using the params(orgin, destination and package weight info)
 
 
-    response = JSON.parse(params[:_json])
 
-
-    origins = response["shipping"]["origins"]
-    destination = response["shipping"]["destination"]
-
+    origins = params["origins"]
+    destination = params["destination"]
     # order = params[:shipping][:order]
 
 
     # send the response to method that will calculate rate
       # rates = shipping_rate_calculator(orgin, destination, weight)
+
       shipping_rates_values = Shipping.shipping_rates_calculator(origins, destination)
 
       response = {shipping_rates_values: shipping_rates_values}
