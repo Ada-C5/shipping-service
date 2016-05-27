@@ -12,7 +12,7 @@ class Shipping
 
   def self.create_by_params(params)
 
-    
+
     # getting the actual JSON we want from that big ugly params hash
     package_info = params[:request] # this is a string
     params = JSON.parse(package_info)
@@ -44,9 +44,8 @@ class Shipping
 
   def find_rates
     [@usps,@fedex].map do |carrier|
-      # binding.pry
       carrier.find_rates(@origin,@destination,@packages).rates.sort_by(&:price).map do |rate|
-        {service_name: rate.service_name, price: rate.price}
+        {service_name: rate.service_name, price: rate.price, delivery_date: rate.delivery_date} # rate.delivery_date should go here I think
        end
      end.flatten
   end
