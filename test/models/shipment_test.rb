@@ -7,7 +7,7 @@ class ShipmentTest < ActiveSupport::TestCase
     {country: 'US', city: 'Overland Park', state: 'KS', zip: '66212'},
     {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
     )
-     assert_instance_of shipment, Array
+     assert_instance_of Array, shipment 
    end
   # test "requires a name" do
   #   generic_pet = Pet.new

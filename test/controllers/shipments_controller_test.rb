@@ -1,15 +1,18 @@
 require 'test_helper'
 
 module ShipmentsControllerTest
-class IndexAction < ActionController::TestCase
+class RatesAction < ActionController::TestCase
     setup do
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
-      get :index
+      # get :get_rates
     end
 
   test "gets ups rates" do
      assert_instance_of shipping_rates, Array
+  end
+
+  test "converts JSON to Ruby" do
   end
 
 #     test "#index returns json" do

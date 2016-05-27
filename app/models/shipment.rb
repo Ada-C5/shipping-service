@@ -39,7 +39,7 @@ class Shipment < ActiveRecord::Base
 
   def self.fedex_rates(product_info, user_info, customer_info)
     packages = ActiveShipping::Package.new(product_info[:weight],[product_info[:height],product_info[:width],product_info[:length]])
-    
+
     origin = ActiveShipping::Location.new({country: 'US'}.merge(user_info))
 
     destination = ActiveShipping::Location.new({country: 'US'}.merge(customer_info))

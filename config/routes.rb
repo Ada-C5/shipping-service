@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/shipping_rates' => 'shipments#shipping_rates'
+  post '/shipping_rates' => 'shipments#get_rates'
   # Example return:
   # @ups_rates = [["UPS Ground", 1777, nil],
   #  ["UPS Three-Day Select",
