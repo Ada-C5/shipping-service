@@ -54,3 +54,4 @@ skip_before_filter  :verify_authenticity_token
    carrier_response  = carrier.find_rates(origin, destination, packages)
    carrier_rates     = carrier_response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]} 
  end
+end 
