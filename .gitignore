@@ -21,4 +21,4 @@
 Environment File
 .env
 
-coverage
+/coverage
