@@ -3,6 +3,10 @@ require 'zip-codes'
 require 'shipping'
 
 class ShippingController < ApplicationController
+  def index
+
+  end
+
   def quotes
     fedex = ShippingWrapper.fedex(params[:zipcode], params[:quantity])
     usps = ShippingWrapper.usps(params[:zipcode], params[:quantity])
