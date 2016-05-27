@@ -27,9 +27,9 @@ module QuotesControllerTest
     setup do
       @request.headers['Accept'] = Mime::JSON
       @request.headers['Content-Type'] = Mime::JSON.to_s
-
-      get :index, carrier: "USPS", shipping: {
-            carrier: "USPS",
+      #body: { shipping: {"address" => address}.to_json }).parsed_response
+      #address = { country: @order.country, state:  @order.state, city:  @order.city, zip:  @order.zip }
+      get :index, shipping: {
             address: { country: "", state: "", city: "", zip: "98001" }
           }.to_json
 
@@ -57,8 +57,8 @@ module QuotesControllerTest
       # @body_incomplete_zip = JSON.parse(response.body)
     end
 
-    test "will raise an error if one of the values in address hash is empty" do
-      skip
+    test "will respond 400 when country in address hash is empty" do
+      assert_response 400
     end
 
   end
