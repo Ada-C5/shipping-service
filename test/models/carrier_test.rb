@@ -13,12 +13,19 @@ class CarrierTest < ActiveSupport::TestCase
   end
 
 
-  test "rate returned is not empty" do
-    @carrier = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
+  test "rate for usps returned is not empty" do
+    # @carrier = ActiveShipping::USPS.new(login: ENV['USPS_LOGIN'])
     origin = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
     usps_rates = Carrier.estimate_usps_shipping("4", "WA", "Seattle", "98116")
    
-    assert usps_rates.success?, usps_rates.message
-    refute usps_rates.rates.empty?
+    refute usps_rates.empty?
+  end
+
+  test "rate for ups returned is not empty" do
+    # @carrier = ActiveShipping::UPS.new(login: ENV['UPS_LOGIN'])
+    origin = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
+    ups_rates = Carrier.estimate_ups_shipping("4", "WA", "Seattle", "98116")
+   
+    refute ups_rates.empty?
   end
 end

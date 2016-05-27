@@ -25,6 +25,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'active_shipping', '~> 1.7.2'
 
+gem 'simplecov',:require => false, :group => :test
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -37,11 +40,11 @@ gem 'active_shipping', '~> 1.7.2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'simplecov'
-  gem 'better_errors'
-  gem 'pry-rails'
-  gem 'minitest-reporters'
   gem 'dotenv-rails'
+  gem 'pry-rails'
+  gem 'minitest-vcr'
+  gem 'minitest-reporters'
+  gem 'webmock'
 end
 
 group :development do

@@ -1,6 +1,6 @@
 require 'active_shipping'
 
-class Carrier
+class Carrier < ActiveRecord::Base
 
   ORIGIN = ActiveShipping::Location.new(country: 'US', state: 'WA', city: 'Seattle', zip: '98161')
 
@@ -13,6 +13,29 @@ class Carrier
     response = usps.find_rates(ORIGIN, destination, packages)
 
     response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    
+  begin
+    estimate = {
+      "usps" => Carrier.estimate_usps_shipping(items, state, city, zip),
+      "ups" => Carrier.estimate_ups_shipping(items, state, city, zip)
+    }
+
+      new_estimate = self.new
+      new_estimate.request = request
+      new_estimate.response = estimate.to_json
+      new_estimate.status = 200
+      new_estimate.save
+      new_estimate
+
+    rescue
+
+      new_estimate = self.new
+      new_estimate.request = request
+      new_estimate.response = { "Error": "Something went wrong" }.to_json
+      new_estimate.status = 400
+      new_estimate.save
+      new_estimate
+    end
   end
 
   def self.estimate_ups_shipping(items, state, city, zip)
@@ -24,7 +47,7 @@ class Carrier
     response = ups.find_rates(ORIGIN, destination, packages)
 
     response.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
-
+    self.new
   end
 
 end

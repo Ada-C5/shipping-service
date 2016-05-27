@@ -11,10 +11,10 @@ require 'test_helper'
       get :calculate
     end
 
-    test "can get #calculate" do
-      # :success corresponds with common HTTP response codes. Anything in 200 is success
-      assert_response :success
-    end
+    # test "can get #calculate" do
+    #   # :success corresponds with common HTTP response codes. Anything in 200 is success
+    #   assert_response :success
+    # end
 
     # test "#calculate returns json" do
     #   assert_match 'application/json', response.header['Content-Type']
