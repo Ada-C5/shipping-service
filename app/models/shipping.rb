@@ -34,9 +34,9 @@ class Shipping
     )
     destination = ActiveShipping::Location.new(
       country: "US",
-      state: params["origin"]["state"],
-      city: params["origin"]["city"],
-      zip: params["origin"]["zip"]
+      state: params["destination"]["state"],
+      city: params["destination"]["city"],
+      zip: params["destination"]["zip"]
       )
     Shipping.new(packages,origin,destination)
   end
