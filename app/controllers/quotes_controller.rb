@@ -16,7 +16,7 @@ class QuotesController < ApplicationController
       #
     quote = Quote.get_rates(request)
     if quote.status.to_i.between?(200,299) # method to check good responses
-      render json: quote.response.as_json, status: quote.status
+      render json: quote.response.to_json, status: quote.status
     else
       render json: [], message: "Error Message", status: quote.status
     end

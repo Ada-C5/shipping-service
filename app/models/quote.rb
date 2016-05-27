@@ -7,16 +7,11 @@ class Quote < ActiveRecord::Base
     address = parsed_request["address"]
     @destination = Quote.get_destination(address) #change to address when not testing
     begin
-      carrier_responses = [
-        {
-          "fedex" => fedex_rates
-        },
-        {
-         "usps" => usps_rates
-        }
-      ]
-      # binding.pry
-
+      carrier_responses = {
+         "fedex" => self.fedex_rates,
+         "usps" => self.usps_rates
+      }
+      
       quote = self.new
       quote.request = request
       quote.response = carrier_responses.to_json
@@ -32,9 +27,9 @@ class Quote < ActiveRecord::Base
       quote.status = 400
       quote.save
       quote
-
     end
   end
+
 
   def self.get_origin
     ActiveShipping::Location.new(country: "US", state: "WA", city: "Seattle", zip: "98121")
