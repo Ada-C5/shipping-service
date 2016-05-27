@@ -23,7 +23,7 @@ skip_before_filter  :verify_authenticity_token
       height    = item[:height].to_i
       length    = item[:length].to_i
       width     = item[:width].to_i
-      packing   = ActiveShipping::Package.new( weight * 16,[lengh, width, height], units: :imperial)
+      packing   = ActiveShipping::Package.new( weight * 16,[length, width, height], units: :imperial)
       packages  << packing
     end
 
