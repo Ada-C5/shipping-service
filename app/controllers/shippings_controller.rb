@@ -5,7 +5,7 @@ class ShippingsController < ApplicationController
     # using the params(orgin, destination and package weight info)
 
 
-
+binding.pry
     origins = params["origins"]
     destination = params["destination"]
     # order = params[:shipping][:order]
@@ -18,7 +18,8 @@ class ShippingsController < ApplicationController
 
       response = {shipping_rates_values: shipping_rates_values}
     # create a log of incoming request from user
-      # log = Log.create(request: params.to_s, response: shipping_rate.to_s)
+      log = Log.create(request: response.to_s, response: response.to_s)
+
 
       if shipping_rates_values
         render json: shipping_rates_values.as_json
