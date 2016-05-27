@@ -45,19 +45,19 @@ class Quote < ActiveRecord::Base
 
   private
 
-  def get_rates_from_carrier(carrier)
+  def self.get_rates_from_carrier(carrier)
     response = carrier.find_rates(@origin, @destination, @packages)
     response.rates.sort_by(&:price).collect { |rate| [rate.service_name, rate.price] }
   end
 
-  def fedex_rates
+  def self.fedex_rates
     fedex = ActiveShipping::FedEx.new(login: ENV["FEDEX_USERNAME"], password: ENV["FEDEX_PASSWORD"], key: ENV["FEDEX_TEST_KEY"], account: ENV["FEDEX_ACCOUNT_NUMBER"], test: true)
-    get_rates_from_carrier(fedex)
+    Quote.get_rates_from_carrier(fedex)
   end
 
-  def usps_rates
+  def self.usps_rates
     usps = ActiveShipping::USPS.new(login: ENV["USPS_USERNAME"], password: ENV["USPS_PASSWORD"])
-    get_rates_from_carrier(usps)
+    Quote.get_rates_from_carrier(usps)
   end
 
   def check_country(address)
