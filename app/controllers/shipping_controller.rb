@@ -4,7 +4,7 @@ after_action :logger
 
   def rates
     info = ShippingInfo.new(params)
-
+    
     render json: [info.ups_rates, info.usps_rates].as_json
 
     rescue ActiveShipping::ResponseError => e
@@ -14,9 +14,10 @@ after_action :logger
 private
 
   def logger
-    @response = JSON.parse(response.body)
-    @request = JSON.parse(request.raw_post)
+    @response =response.body
+    @request = request.body.read.force_encoding("UTF-8")
     Shipping.create(response: @response, request: @request)
+
   end
 
 end
