@@ -10,12 +10,14 @@ module ShippingControllerTest
 
     test "can get #quotes" do
       assert_response :success
+      # assert_not_nil assigns(:log)
     end
 
     test "#quotes returns json" do
       assert_match 'application/json', response.header['Content-Type']
     end
   end
+end
 
   # class QuotesJSONObject < ActionController::TestCase
   #   setup do
@@ -41,5 +43,3 @@ module ShippingControllerTest
   #     assert_equal keys, @body.map(&:keys).flatten.uniq.sort
   #   end
   # end
-  
-end

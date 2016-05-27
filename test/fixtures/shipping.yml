@@ -1,10 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+fedex_1:
+  service_name: FedEx International Priority
+  rate_price: 2245
 
-fedex_service_name: FedEx International Priority
-fedex_rate_price: 2245
+fedex_2:
+  service_name: FedEx Express
+  rate_price: 11188
 
-fedex_service_name: FedEx Express
-fedex_rate_price: 11188
-
-fedex_service_name: FedEx Priority
-fedex_rate_price: 8135
+fedex_3:
+  service_name: FedEx Priority
+  rate_price: 8135
