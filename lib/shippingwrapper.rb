@@ -4,9 +4,10 @@ class ShippingWrapper
   attr_reader :fedex, :ups, :response
   def initialize(fedex=nil, ups=nil, response=false)
     if fedex.present? && ups.present?
-      @fedex = fedex.params["RateReply"]['RateReplyDetails']
-      @ups = ups.params["RatedShipment"]
-    else
+      @fedex = fedex
+      @ups = ups
+
+     else
       @response = "Invalid Address"
       @fedex = fedex
       @ups = ups
@@ -18,8 +19,6 @@ class ShippingWrapper
     ups_info = ActiveShipping::UPS.new(login: ENV['UPS_LOGIN'], password: ENV['UPS_PASSWORD'], key: ENV['UPS_KEY'])
     fedex_info = ActiveShipping::FedEx.new(login: ENV['FEDEX_LOGIN'], password: ENV['FEDEX_PASSWORD'], key: ENV['FEDEX_KEY'], account: ENV['FEDEX_ACCOUNT'], test: ENV['FEDEX_TEST'])
 
-    # binding.pry
-
     origin = ActiveShipping::Location.new(origin)
     destination = ActiveShipping::Location.new(destination)
 
@@ -27,13 +26,20 @@ class ShippingWrapper
       ActiveShipping::Package.new(product[:weight_lbs] * 16, [product[:length_in], product[:height_in], product[:width_in]],units: product[:units])
     end
 
-    # binding.pry
-    fedex_data = fedex_info.find_rates(origin, destination, packages)
-    ups_data = ups_info.find_rates(origin, destination, packages)
+    begin
+      fedex_data = fedex_info.find_rates(origin, destination, packages)
+      fedex_data = fedex_data.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    rescue
+      return self.new(nil,nil, nil)
+    end
+
+    begin
+      ups_data = ups_info.find_rates(origin, destination, packages)
+      ups_data = ups_data.rates.sort_by(&:price).collect {|rate| [rate.service_name, rate.price]}
+    rescue
+      return self.new(nil,nil, nil)
+    end
 
     return self.new(fedex_data, ups_data)
-
-
   end
-
 end
