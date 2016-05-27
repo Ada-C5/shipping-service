@@ -2,32 +2,39 @@ class Quote < ActiveRecord::Base
 
   def self.get_rates(request)
     parsed_request = JSON.parse(request)
+    @quote = self.new
+    @quote.request = request
     @origin = Quote.get_origin
     @packages = Quote.get_packages
     address = parsed_request["address"]
+
+    if self.check_zip(address).nil?
+      return @quote
+    end
+
     @destination = Quote.get_destination(address) #change to address when not testing
+    if @destination.nil?
+      return @quote
+    end
+
     begin
       carrier_responses = {
          "FedEx" => self.fedex_rates,
          "USPS" => self.usps_rates
       }
 
-      quote = self.new
-      quote.request = request
-      quote.response = carrier_responses.to_json
-      quote.status = 200
-      quote.save
-      quote
+      @quote.response = carrier_responses.to_json
+      @quote.status = 200
+      @quote.save
+      @quote
 
     rescue
-
-      quote = self.new
-      quote.request = request
-      quote.response = { "Error": "Some error" }.to_json
-      quote.status = 400
-      quote.save
-      quote
+      @quote.response = { "Error": "Some error" }.to_json
+      @quote.status = 400
+      @quote.save
+      @quote
     end
+
   end
 
 
@@ -36,7 +43,14 @@ class Quote < ActiveRecord::Base
   end
 
   def self.get_destination(address)
-    ActiveShipping::Location.new(country: address["country"], state: address["state"], city: address["city"], zip: address["zip"])
+    begin
+      ActiveShipping::Location.new(country: address["country"], state: address["state"], city: address["city"], zip: address["zip"])
+    rescue
+      @quote.response = { "Error": "Invalid destination address" }.to_json
+      @quote.status = 422
+      @quote.save
+      return nil
+    end
   end
 
   def self.get_packages
@@ -70,8 +84,23 @@ class Quote < ActiveRecord::Base
     end
   end
 
-  def check_zip(address)
+  def self.check_zip(address)
+    if address["zip"].nil? || address["zip"].empty?
+      self.throw_422_error
+      return nil
+    elsif address["zip"].length != 5 && address["zip"].length != 9
+      self.throw_422_error
+      return nil
+    elsif address["zip"][/^(\d)+$/] != address["zip"]
+      self.throw_422_error
+      return nil
+    end
+    return true
   end
 
-
+  def self.throw_422_error
+    @quote.response = { "Error": "Invalid destination address" }.to_json
+    @quote.status = 422
+    @quote.save
+  end
 end

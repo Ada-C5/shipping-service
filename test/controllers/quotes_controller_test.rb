@@ -29,36 +29,26 @@ module QuotesControllerTest
       @request.headers['Content-Type'] = Mime::JSON.to_s
       #body: { shipping: {"address" => address}.to_json }).parsed_response
       #address = { country: @order.country, state:  @order.state, city:  @order.city, zip:  @order.zip }
-      get :index, shipping: {
-            address: { country: "", state: "", city: "", zip: "98001" }
-          }.to_json
+      get :index, { "shipping" => {
+            "address" => { "country" => "", "state" => "WA", "city" => "Seattle", "zip" => "98122" }
+          }.to_json }
 
       @body_bad_country = JSON.parse(response.body)
-      #
-      # get :show, carrier: "USPS", shipping: {
-      #       carrier: "USPS",
-      #       address: { country: "US", state: nil, city: "Seattle", zip: "98074" }
-      #     }.to_json
-      #
-      # @body_nil = JSON.parse(response.body)
-      #
-      # get :show, carrier: "USPS", shipping: {
-      #       carrier: "USPS",
-      #       address: { country: "US", state: "WA", city: "Seattle", zip: "9BCDE" }
-      #     }.to_json
-      #
-      # @body_letter_zip = JSON.parse(response.body)
-      #
-      # get :show, carrier: "USPS", shipping: {
-      #       carrier: "USPS",
-      #       address: { country: "US", state: nil, city: "", zip: "980" }
-      #     }.to_json
-      #
-      # @body_incomplete_zip = JSON.parse(response.body)
+
+      get :index, { "shipping" => {
+            "address" => { "country" => "US", "state" => "WA", "city" => "Seattle", "zip" => "2werd" }
+          }.to_json }
+
+      @body_letter_zip = JSON.parse(response.body)
+
     end
 
-    test "will respond 400 when country in address hash is empty" do
-      assert_response 400
+    test "will respond 422 when country in address hash is empty" do
+      assert_response 422
+    end
+
+    test "body will be empty if request has address with bad zip" do
+      assert_equal @body_letter_zip, []
     end
 
   end
