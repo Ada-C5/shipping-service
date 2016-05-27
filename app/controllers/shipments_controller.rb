@@ -23,6 +23,7 @@ class ShipmentsController < ApplicationController
     {country: 'US', city: 'Overland Park', state: 'KS', zip: '66212'},
     {country: 'US', city: 'Seattle', state: 'WA', zip: '98102'}
     )
+    return @fedex_rates
   end
 
 end
