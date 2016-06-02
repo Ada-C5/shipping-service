@@ -1,3 +1,4 @@
+
 *.gem
 *.rbc
 /.config
@@ -71,3 +72,5 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
+
+/.env
