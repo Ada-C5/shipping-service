@@ -4,8 +4,6 @@ class ShippingsController < ApplicationController
     # get the shipping rate from shipping.rb rate method
     # using the params(orgin, destination and package weight info)
 
-
-binding.pry
     origins = params["origins"]
     destination = params["destination"]
     # order = params[:shipping][:order]

@@ -8,8 +8,7 @@
     MEDIUM = [10, 10, 10]
     LARGE = [20, 20, 20]
 
-    # UPS_LOGIN = "rishallen_5"
-    # UPS_PASSWORD = "29E8Y5"
+
     # UPS_KEY = "9D0CA9FE6A4849E8"
 
     def initializer
